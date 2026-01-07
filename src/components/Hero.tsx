@@ -4,10 +4,10 @@ import { ArrowRight, Clock, DollarSign, TrendingUp, Headphones } from "lucide-re
 import heroBg from "@/assets/hero-bg.jpg";
 
 const benefits = [
-  { icon: Clock, text: "Save time by eliminating manual work" },
-  { icon: DollarSign, text: "Reduce costs with AI automation" },
-  { icon: TrendingUp, text: "Scale faster with intelligent workflows" },
-  { icon: Headphones, text: "Improve customer experience 24/7" },
+  { icon: Clock, text: "Save hours every day on manual tasks" },
+  { icon: DollarSign, text: "Cut costs by up to 60% with automation" },
+  { icon: TrendingUp, text: "Grow your business without hiring more staff" },
+  { icon: Headphones, text: "Delight customers with instant 24/7 support" },
 ];
 
 export const Hero = () => {

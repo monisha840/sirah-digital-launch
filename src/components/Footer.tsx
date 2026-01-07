@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { Linkedin, Twitter, Instagram, Youtube, ArrowUpRight } from "lucide-react";
+import { Linkedin, Twitter, Instagram, Youtube } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.jpeg";
 
 const footerLinks = {
   company: [
@@ -39,10 +41,8 @@ export const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <a href="#home" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-lg">S</span>
-              </div>
+            <a href="#home" className="flex items-center gap-3 mb-4">
+              <img src={logo} alt="SIRAH DIGITAL" className="w-10 h-10 rounded-lg object-cover" />
               <span className="font-display font-bold text-xl text-foreground">
                 SIRAH <span className="gradient-text">DIGITAL</span>
               </span>
@@ -51,6 +51,10 @@ export const Footer = () => {
               Transforming businesses with intelligent AI automation solutions. 
               We help you work smarter, scale faster, and grow without limits.
             </p>
+
+            <Button variant="hero" size="lg" asChild className="mb-6">
+              <a href="#contact">Book Free Consultation</a>
+            </Button>
 
             {/* Social Links */}
             <div className="flex gap-3">

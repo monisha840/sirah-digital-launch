@@ -4,30 +4,30 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "CEO, TechStart Inc.",
-    content: "SIRAH DIGITAL transformed our entire sales process. We've seen a 300% increase in qualified leads and our team now focuses on closing deals instead of chasing prospects.",
+    name: "Dr. Rebecca Martinez",
+    role: "Medical Director, FertilityCare Clinic",
+    content: "SIRAH DIGITAL revolutionized our patient communication. Appointment no-shows dropped by 45% and our staff now focuses on patient care instead of administrative tasks.",
     rating: 5,
     image: null,
   },
   {
-    name: "Michael Chen",
-    role: "Operations Director, ScaleUp Co.",
-    content: "The AI chatbot they built handles 80% of our customer inquiries automatically. Our support costs dropped by 60% while customer satisfaction increased.",
+    name: "Dr. James Wilson",
+    role: "CEO, Advanced IVF Center",
+    content: "The AI-powered patient journey automation has been transformative. Our patients receive timely reminders and personalized care coordination 24/7.",
     rating: 5,
     image: null,
   },
   {
-    name: "Emily Rodriguez",
-    role: "Marketing Head, GrowthLab",
-    content: "Their marketing automation system is incredible. We're now running personalized campaigns at scale that would have been impossible before. ROI has been phenomenal.",
+    name: "Sarah Thompson",
+    role: "Operations Manager, Healthcare Solutions",
+    content: "Their healthcare automation expertise is unmatched. We've streamlined our entire patient intake process and improved satisfaction scores by 40%.",
     rating: 5,
     image: null,
   },
   {
-    name: "David Thompson",
-    role: "Founder, InnovateCo",
-    content: "From consultation to deployment, the SIRAH team was exceptional. They understood our unique challenges and delivered a solution that exceeded expectations.",
+    name: "Dr. Michael Chen",
+    role: "Founder, Wellness Medical Group",
+    content: "From consultation to deployment, the SIRAH team understood healthcare compliance requirements perfectly. The solution exceeded all our expectations.",
     rating: 5,
     image: null,
   },
@@ -35,24 +35,24 @@ const testimonials = [
 
 const caseStudies = [
   {
-    metric: "300%",
-    label: "Increase in Leads",
-    company: "E-Commerce Brand",
+    metric: "45%",
+    label: "Fewer No-Shows",
+    company: "Fertility Clinic",
   },
   {
     metric: "60%",
     label: "Cost Reduction",
-    company: "SaaS Company",
+    company: "Healthcare Provider",
   },
   {
     metric: "40hrs",
     label: "Saved Weekly",
-    company: "Real Estate Agency",
+    company: "Medical Practice",
   },
   {
     metric: "10x",
     label: "Response Speed",
-    company: "Healthcare Provider",
+    company: "IVF Center",
   },
 ];
 
@@ -75,8 +75,8 @@ export const Testimonials = () => {
         >
           <span className="text-primary font-medium text-sm uppercase tracking-wider">Testimonials</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-            Trusted by{" "}
-            <span className="gradient-text">Industry Leaders</span>
+            Real Results from{" "}
+            <span className="gradient-text">AI Automation</span>
           </h2>
           <p className="text-muted-foreground text-lg">
             Don't just take our word for it. Here's what our clients have to say 

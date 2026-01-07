@@ -1,63 +1,28 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { 
-  ShoppingCart, 
-  Stethoscope, 
-  Building2, 
-  GraduationCap, 
-  Plane, 
-  Utensils,
-  Home,
-  Scale
+  Heart, 
+  Briefcase, 
+  Users
 } from "lucide-react";
 
 const industries = [
   {
-    icon: ShoppingCart,
-    name: "E-Commerce",
-    description: "Automate order processing, customer support, inventory management, and personalized marketing.",
-    useCases: ["Abandoned cart recovery", "Order status updates", "Product recommendations"],
+    icon: Heart,
+    name: "IVF & Fertility",
+    description: "Automate patient journeys, appointment scheduling, and personalized communication for fertility clinics.",
+    useCases: ["Patient intake automation", "Treatment reminders", "Follow-up coordination"],
   },
   {
-    icon: Stethoscope,
-    name: "Healthcare",
-    description: "Streamline patient communication, appointment scheduling, and administrative workflows.",
-    useCases: ["Appointment reminders", "Patient follow-ups", "Medical record processing"],
+    icon: Briefcase,
+    name: "Agencies",
+    description: "Streamline client management, project workflows, and reporting with intelligent automation.",
+    useCases: ["Client onboarding", "Task automation", "Performance reporting"],
   },
   {
-    icon: Building2,
-    name: "Real Estate",
-    description: "Automate lead nurturing, property matching, and client communication at scale.",
-    useCases: ["Lead qualification", "Property alerts", "Virtual tour scheduling"],
-  },
-  {
-    icon: GraduationCap,
-    name: "Education",
-    description: "Enhance student engagement with automated enrollment, support, and learning workflows.",
-    useCases: ["Enrollment automation", "Course reminders", "Student support bots"],
-  },
-  {
-    icon: Plane,
-    name: "Travel & Hospitality",
-    description: "Deliver exceptional guest experiences with automated bookings and personalized service.",
-    useCases: ["Booking confirmations", "Concierge services", "Review management"],
-  },
-  {
-    icon: Utensils,
-    name: "Restaurants & Food",
-    description: "Optimize reservations, orders, and customer loyalty with smart automation.",
-    useCases: ["Order automation", "Reservation management", "Loyalty programs"],
-  },
-  {
-    icon: Home,
-    name: "Home Services",
-    description: "Automate scheduling, dispatch, and customer communication for service businesses.",
-    useCases: ["Booking systems", "Technician dispatch", "Follow-up surveys"],
-  },
-  {
-    icon: Scale,
-    name: "Legal & Professional",
-    description: "Streamline client intake, document processing, and case management.",
+    icon: Users,
+    name: "Professional Services",
+    description: "Optimize client intake, document processing, and billing workflows for service firms.",
     useCases: ["Client intake forms", "Document automation", "Billing reminders"],
   },
 ];
@@ -91,7 +56,7 @@ export const Industries = () => {
         </motion.div>
 
         {/* Industries Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {industries.map((industry, index) => (
             <motion.div
               key={index}

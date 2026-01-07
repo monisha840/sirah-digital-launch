@@ -12,33 +12,33 @@ import {
 const reasons = [
   {
     icon: Rocket,
-    title: "Results-Driven Approach",
-    description: "We focus on measurable outcomes. Every automation we build is designed to deliver ROI from day one.",
+    title: "Business-First AI Strategy",
+    description: "We focus on your goals first. Every automation is designed to solve real business problems.",
   },
   {
     icon: Shield,
-    title: "Enterprise-Grade Security",
-    description: "Your data is protected with bank-level encryption and compliance with industry standards.",
+    title: "Custom-Built Automations",
+    description: "No cookie-cutter solutions. Each system is tailored to your unique workflows and requirements.",
   },
   {
-    icon: Headphones,
-    title: "24/7 Dedicated Support",
-    description: "Our team is always available to ensure your automations run smoothly and efficiently.",
+    icon: RefreshCw,
+    title: "Scalable & Future-Ready",
+    description: "Our solutions grow with you, from startup to enterprise, adapting as your needs evolve.",
   },
   {
     icon: BarChart3,
-    title: "Data-Driven Optimization",
-    description: "Continuous monitoring and optimization ensure your systems improve over time.",
+    title: "ROI-Focused Implementation",
+    description: "Every project targets measurable outcomes with clear metrics and returns.",
+  },
+  {
+    icon: Headphones,
+    title: "End-to-End Support",
+    description: "From planning to deployment and beyond, our team is with you every step of the way.",
   },
   {
     icon: Zap,
     title: "Rapid Implementation",
-    description: "From discovery to deployment in weeks, not months. Start seeing results faster.",
-  },
-  {
-    icon: RefreshCw,
-    title: "Scalable Solutions",
-    description: "Our solutions grow with your business, from startup to enterprise scale.",
+    description: "Start seeing results in weeks, not months. We move fast without sacrificing quality.",
   },
 ];
 
@@ -47,7 +47,7 @@ export const WhyChooseUs = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section id="why-us" className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
 
@@ -61,8 +61,8 @@ export const WhyChooseUs = () => {
           >
             <span className="text-primary font-medium text-sm uppercase tracking-wider">Why Choose Us</span>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-              The SIRAH DIGITAL{" "}
-              <span className="gradient-text">Advantage</span>
+              Why Businesses Choose{" "}
+              <span className="gradient-text">SIRAH DIGITAL</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
               We're not just another automation agency. We're your strategic partner 

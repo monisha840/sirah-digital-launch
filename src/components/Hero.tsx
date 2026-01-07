@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, TrendingUp, Clock } from "lucide-react";
+import { ArrowRight, Clock, DollarSign, TrendingUp, Headphones } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const benefits = [
-  { icon: Clock, text: "Save 40+ Hours Weekly" },
-  { icon: TrendingUp, text: "10x Your Efficiency" },
-  { icon: Zap, text: "Scale Faster" },
+  { icon: Clock, text: "Save time by eliminating manual work" },
+  { icon: DollarSign, text: "Reduce costs with AI automation" },
+  { icon: TrendingUp, text: "Scale faster with intelligent workflows" },
+  { icon: Headphones, text: "Improve customer experience 24/7" },
 ];
 
 export const Hero = () => {
@@ -65,8 +66,8 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
           >
-            Automate Your Business.{" "}
-            <span className="gradient-text">Multiply Your Growth.</span>
+            Automate Your Business with AI.{" "}
+            <span className="gradient-text">Scale Faster. Work Smarter.</span>
           </motion.h1>
 
           {/* Subheading */}
@@ -76,8 +77,8 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-balance"
           >
-            We build intelligent AI systems that automate your operations, 
-            reduce costs by 60%, and help you scale without limits.
+            We help businesses automate operations, optimize workflows, and increase 
+            revenue using intelligent AI systems.
           </motion.p>
 
           {/* Benefits */}
@@ -85,13 +86,21 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-6 mb-10"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10"
           >
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-2 text-muted-foreground">
-                <benefit.icon className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium">{benefit.text}</span>
-              </div>
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                className="flex items-center gap-3 p-3 rounded-lg glass"
+              >
+                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
+                  <benefit.icon className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-foreground">{benefit.text}</span>
+              </motion.div>
             ))}
           </motion.div>
 
@@ -99,7 +108,7 @@ export const Hero = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button variant="hero" size="xl" asChild>
@@ -109,7 +118,7 @@ export const Hero = () => {
               </a>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
-              <a href="#services">Explore Services</a>
+              <a href="#services">Explore Our AI Solutions</a>
             </Button>
           </motion.div>
 
@@ -117,16 +126,22 @@ export const Hero = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
             className="mt-16 pt-16 border-t border-border/50"
           >
-            <p className="text-sm text-muted-foreground mb-6">Trusted by innovative companies worldwide</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-50">
-              {["TechCorp", "InnovateCo", "ScaleUp", "FutureAI", "GrowthLab"].map((company) => (
-                <span key={company} className="font-display font-semibold text-lg text-muted-foreground">
-                  {company}
-                </span>
-              ))}
+            <div className="flex flex-wrap justify-center items-center gap-8 text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-sm font-medium">Trusted by growing businesses</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-sm font-medium">Secure & scalable AI systems</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-sm font-medium">Results-driven automation experts</span>
+              </div>
             </div>
           </motion.div>
         </div>

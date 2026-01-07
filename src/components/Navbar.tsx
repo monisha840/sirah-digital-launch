@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.jpeg";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Industries", href: "#industries" },
+  { name: "Why Us", href: "#why-us" },
   { name: "Process", href: "#process" },
-  { name: "Testimonials", href: "#testimonials" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -34,10 +33,8 @@ export const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-            <span className="font-display font-bold text-primary-foreground text-lg">S</span>
-          </div>
+        <a href="#home" className="flex items-center gap-3">
+          <img src={logo} alt="SIRAH DIGITAL" className="w-10 h-10 rounded-lg object-cover" />
           <span className="font-display font-bold text-xl text-foreground">
             SIRAH <span className="gradient-text">DIGITAL</span>
           </span>

@@ -76,8 +76,8 @@ export const Services = () => {
         >
           <span className="text-primary font-medium text-sm uppercase tracking-wider">Our Services</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-            AI Automation Solutions for{" "}
-            <span className="gradient-text">Every Business Need</span>
+            AI Automation Solutions{" "}
+            <span className="gradient-text">Built for Growth</span>
           </h2>
           <p className="text-muted-foreground text-lg">
             From chatbots to complete workflow automation, we deliver AI solutions 

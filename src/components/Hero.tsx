@@ -95,14 +95,14 @@ export const Hero = () => {
                                 Automate Your Business with AI
                             </motion.h1>
 
-                            {/* Secondary Tagline - Modern and premium */}
+                            {/* Modern Tagline - Bold and Clean */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.25, type: "spring", stiffness: 80 }}
                                 className="mb-8"
                             >
-                                <p className="text-2xl sm:text-3xl md:text-4xl font-display font-medium gradient-text text-glow">
+                                <p className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground bg-card/80 px-6 py-3 rounded-lg inline-block">
                                     Scale Faster. Work Smarter.
                                 </p>
                             </motion.div>
@@ -176,15 +176,16 @@ export const Hero = () => {
                                 WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 100%)',
                             }}
                         >
-                            {/* AI Visual Image with floating animation and natural blending */}
+                            {/* AI Visual Image with floating and breathe animation */}
                             <motion.img
                                 src={aiHeroVisual}
                                 alt="AI Intelligence Visualization"
                                 animate={{
-                                    y: [-10, 10, -10],
+                                    y: [-8, 8, -8],
+                                    scale: [1, 1.02, 1],
                                 }}
-                                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                                className="relative w-full max-w-md h-auto object-contain opacity-90"
+                                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                                className="relative w-full max-w-xl h-auto object-contain opacity-90"
                             />
                         </motion.div>
 
@@ -228,6 +229,6 @@ export const Hero = () => {
                     </motion.div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 };

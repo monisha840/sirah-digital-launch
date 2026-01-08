@@ -10,11 +10,18 @@ import {
   Pill,
   Apple,
   Scan,
-  Leaf
+  Leaf,
+  Activity
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const industries = [
+  {
+    icon: Activity,
+    name: "Dermatologists",
+    description: "AI-powered appointment booking, patient follow-ups, lead management, and clinic workflow automation for dermatology practices.",
+    useCases: ["Appointment automation", "Patient follow-ups", "Clinic workflow"],
+  },
   {
     icon: Baby,
     name: "IVF & Fertility Clinics",
@@ -98,7 +105,7 @@ export const Industries = () => {
           <span className="text-primary font-semibold text-sm uppercase tracking-wider shimmer">Industries We Serve</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             AI Automation for{" "}
-            <span className="gradient-text text-glow">Every Industry</span>
+            <span className="gradient-text text-glow">Industry</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
             From healthcare clinics to digital agencies, we help businesses across industries
@@ -143,7 +150,7 @@ export const Industries = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center mt-12"
         >
-          <p className="text-muted-foreground mb-4">
+          <p className="text-muted-foreground text-lg font-bold mb-4">
             Don't see your industry? We create custom AI solutions for any business.
           </p>
           <Button variant="heroOutline" size="lg" asChild className="hover-lift">

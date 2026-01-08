@@ -86,7 +86,7 @@ export const WhyChooseUs = () => {
                 animate={isInView ? { scale: 1, opacity: 1 } : {}}
                 transition={{ delay: 0.4, type: "spring" }}
                 className="group">
-                <div className="font-display text-3xl font-bold gradient-text group-hover:text-glow transition-all">200+</div>
+                <div className="font-display text-3xl font-bold gradient-text group-hover:text-glow transition-all">25+</div>
                 <div className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">Happy Clients</div>
               </motion.div>
               <motion.div

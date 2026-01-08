@@ -17,8 +17,6 @@ const footerLinks = {
     { name: "Marketing Automation", href: "#services" },
   ],
   resources: [
-    { name: "Blog", href: "#" },
-    { name: "Case Studies", href: "#testimonials" },
     { name: "FAQ", href: "#" },
     { name: "Support", href: "#contact" },
   ],
@@ -46,7 +44,7 @@ export const Footer = () => {
               <motion.img
                 src={logo}
                 alt="SIRAH DIGITAL"
-                className="w-10 h-10 rounded-lg object-cover ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all"
+                className="w-12 h-12 rounded-lg object-cover ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all shadow-lg"
                 whileHover={{ scale: 1.05 }}
               />
               <span className="font-display font-bold text-xl text-foreground">

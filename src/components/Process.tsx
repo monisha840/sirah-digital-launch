@@ -41,8 +41,9 @@ export const Process = () => {
 
   return (
     <section id="process" className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.08),transparent_50%)]" />
+      {/* Enhanced Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.1),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--accent)/0.08),transparent_50%)]" />
 
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
         {/* Section Header */}
@@ -52,13 +53,13 @@ export const Process = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Our Process</span>
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider shimmer">Our Process</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             From Discovery to{" "}
-            <span className="gradient-text">Deployment</span>
+            <span className="gradient-text text-glow">Deployment</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Our proven 5-step process ensures smooth implementation and 
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Our proven 5-step process ensures smooth implementation and
             measurable results from your AI automation investment.
           </p>
         </motion.div>
@@ -74,30 +75,29 @@ export const Process = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.15 }}
-              className={`relative flex items-center gap-8 mb-12 last:mb-0 ${
-                index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              }`}
+              className={`relative flex items-center gap-8 mb-12 last:mb-0 ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+                }`}
             >
               {/* Content Card */}
               <div className={`flex-1 ${index % 2 === 0 ? "lg:text-right" : "lg:text-left"}`}>
-                <div className="inline-block p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-colors duration-300">
+                <div className="inline-block p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/40 transition-all duration-500 group hover-lift">
                   <div className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? "lg:flex-row-reverse" : ""}`}>
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <step.icon className="w-6 h-6 text-primary" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center group-hover:from-primary/25 group-hover:to-accent/20 transition-all group-hover:scale-110">
+                      <step.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                     </div>
-                    <span className="font-display text-3xl font-bold text-muted-foreground/30">
+                    <span className="font-display text-3xl font-bold gradient-text group-hover:text-glow transition-all">
                       {step.number}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold mb-2">{step.title}</h3>
+                  <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{step.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
                     {step.description}
                   </p>
                 </div>
               </div>
 
-              {/* Center Dot */}
-              <div className="hidden lg:flex items-center justify-center w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/50 z-10" />
+              {/* Enhanced Center Dot */}
+              <div className="hidden lg:flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg glow-primary z-10 pulse-glow" />
 
               {/* Spacer for alternating layout */}
               <div className="hidden lg:block flex-1" />

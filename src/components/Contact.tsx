@@ -14,10 +14,10 @@ export const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     toast.success("Thank you! We'll be in touch within 24 hours.");
     setIsSubmitting(false);
     (e.target as HTMLFormElement).reset();
@@ -37,13 +37,13 @@ export const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Get Started</span>
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider shimmer">Get Started</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             Ready to{" "}
-            <span className="gradient-text">Automate Your Growth?</span>
+            <span className="gradient-text text-glow">Automate Your Growth?</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Book a free consultation call with our AI automation experts 
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Book a free consultation call with our AI automation experts
             and discover how we can transform your business.
           </p>
         </motion.div>
@@ -57,13 +57,13 @@ export const Contact = () => {
             className="lg:col-span-2 space-y-8"
           >
             {/* CTA Card */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
-              <Calendar className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-display text-xl font-semibold mb-2">Book Free Consultation</h3>
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 hover:border-primary/50 transition-all duration-500 glow-soft group">
+              <Calendar className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors">Book Free Consultation</h3>
               <p className="text-muted-foreground text-sm mb-4">
                 30-minute strategy call with our AI experts. No obligations, just value.
               </p>
-              <Button variant="hero" className="w-full" asChild>
+              <Button variant="hero" className="w-full glow-primary" asChild>
                 <a href="#contact" className="flex items-center justify-center gap-2">
                   Schedule Now <ArrowRight className="w-4 h-4" />
                 </a>
@@ -72,9 +72,9 @@ export const Contact = () => {
 
             {/* Contact Details */}
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-primary" />
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-300 group hover-lift">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center shrink-0 group-hover:from-primary/25 group-hover:to-accent/20 transition-all">
+                  <Mail className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
                   <div className="font-medium mb-1">Email Us</div>
@@ -84,9 +84,9 @@ export const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5 text-primary" />
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-300 group hover-lift">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center shrink-0 group-hover:from-primary/25 group-hover:to-accent/20 transition-all">
+                  <Phone className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
                   <div className="font-medium mb-1">Call Us</div>
@@ -96,9 +96,9 @@ export const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5 text-primary" />
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-300 group hover-lift">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center shrink-0 group-hover:from-primary/25 group-hover:to-accent/20 transition-all">
+                  <MapPin className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
                   <div className="font-medium mb-1">Location</div>
@@ -117,13 +117,13 @@ export const Contact = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card/50 border border-border/50">
-              <h3 className="font-display text-2xl font-semibold mb-6">Send us a message</h3>
+            <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card/60 border border-border/50 glass-premium">
+              <h3 className="font-display text-2xl font-semibold mb-6 gradient-text">Send us a message</h3>
 
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">First Name *</label>
-                  <Input 
+                  <Input
                     required
                     placeholder="John"
                     className="bg-background/50 border-border/50 focus:border-primary"
@@ -131,7 +131,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Last Name *</label>
-                  <Input 
+                  <Input
                     required
                     placeholder="Doe"
                     className="bg-background/50 border-border/50 focus:border-primary"
@@ -142,7 +142,7 @@ export const Contact = () => {
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Email *</label>
-                  <Input 
+                  <Input
                     type="email"
                     required
                     placeholder="john@company.com"
@@ -151,7 +151,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Phone</label>
-                  <Input 
+                  <Input
                     type="tel"
                     placeholder="+1 (234) 567-890"
                     className="bg-background/50 border-border/50 focus:border-primary"
@@ -161,7 +161,7 @@ export const Contact = () => {
 
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Company</label>
-                <Input 
+                <Input
                   placeholder="Your Company Name"
                   className="bg-background/50 border-border/50 focus:border-primary"
                 />
@@ -169,7 +169,7 @@ export const Contact = () => {
 
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-2">Tell us about your automation needs *</label>
-                <Textarea 
+                <Textarea
                   required
                   rows={4}
                   placeholder="Describe your business challenges and what you'd like to automate..."
@@ -177,11 +177,11 @@ export const Contact = () => {
                 />
               </div>
 
-              <Button 
-                type="submit" 
-                variant="hero" 
-                size="lg" 
-                className="w-full"
+              <Button
+                type="submit"
+                variant="hero"
+                size="lg"
+                className="w-full glow-primary hover-glow"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

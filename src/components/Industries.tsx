@@ -1,8 +1,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { 
-  Heart, 
-  Briefcase, 
+import {
+  Heart,
+  Briefcase,
   Users,
   Stethoscope,
   Brain,
@@ -83,8 +83,9 @@ export const Industries = () => {
 
   return (
     <section id="industries" className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,hsl(var(--accent)/0.08),transparent_60%)]" />
+      {/* Enhanced Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,hsl(var(--accent)/0.1),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--primary)/0.05),transparent_70%)]" />
 
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
         {/* Section Header */}
@@ -94,13 +95,13 @@ export const Industries = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Industries We Serve</span>
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider shimmer">Industries We Serve</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             AI Automation for{" "}
-            <span className="gradient-text">Every Industry</span>
+            <span className="gradient-text text-glow">Every Industry</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            From healthcare clinics to digital agencies, we help businesses across industries 
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            From healthcare clinics to digital agencies, we help businesses across industries
             save time and grow faster with smart AI automation solutions.
           </p>
         </motion.div>
@@ -113,19 +114,20 @@ export const Industries = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group p-5 rounded-2xl bg-card/30 border border-border/30 hover:bg-card/50 hover:border-primary/30 transition-all duration-300"
+              className="group p-5 rounded-2xl bg-card/40 border border-border/30 hover:bg-card/60 hover:border-primary/40 transition-all duration-500 hover-lift"
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                <industry.icon className="w-6 h-6 text-primary" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center mb-4 group-hover:from-primary/25 group-hover:to-accent/20 group-hover:scale-110 transition-all duration-500 relative">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-accent opacity-0 group-hover:opacity-20 blur-lg transition-opacity" />
+                <industry.icon className="w-6 h-6 text-primary relative z-10 group-hover:scale-110 transition-transform" />
               </div>
 
-              <h3 className="font-display text-lg font-semibold mb-2">{industry.name}</h3>
+              <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{industry.name}</h3>
               <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{industry.description}</p>
 
               <div className="space-y-1.5">
                 {industry.useCases.map((useCase, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <div className="w-1 h-1 rounded-full bg-primary/60" />
+                  <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                    <div className="w-1 h-1 rounded-full bg-primary/60 group-hover:scale-125 transition-transform" />
                     {useCase}
                   </div>
                 ))}
@@ -144,7 +146,7 @@ export const Industries = () => {
           <p className="text-muted-foreground mb-4">
             Don't see your industry? We create custom AI solutions for any business.
           </p>
-          <Button variant="heroOutline" size="lg" asChild>
+          <Button variant="heroOutline" size="lg" asChild className="hover-lift">
             <a href="#contact">Discuss Your Needs</a>
           </Button>
         </motion.div>

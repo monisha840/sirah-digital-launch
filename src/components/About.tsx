@@ -39,29 +39,30 @@ export const About = () => {
 
   return (
     <section id="about" className="py-24 relative overflow-hidden">
-      {/* Background Effect */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]" />
+      {/* Enhanced Background Effect */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.08),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent)/0.05),transparent_70%)]" />
 
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, type: "spring" }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">About Us</span>
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider shimmer">About Us</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             Pioneering the Future of{" "}
-            <span className="gradient-text">Business Automation</span>
+            <span className="gradient-text text-glow">Business Automation</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            SIRAH DIGITAL is at the forefront of AI automation, helping businesses transform 
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            SIRAH DIGITAL is at the forefront of AI automation, helping businesses transform
             their operations through intelligent systems that work 24/7.
           </p>
         </motion.div>
 
-        {/* Stats */}
+        {/* Enhanced Stats with animation */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -69,27 +70,33 @@ export const About = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
         >
           {stats.map((stat, index) => (
-            <div key={index} className="text-center p-6 rounded-2xl glass">
-              <div className="font-display text-3xl sm:text-4xl font-bold gradient-text mb-2">
+            <motion.div
+              key={index}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={isInView ? { scale: 1, opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 + index * 0.1, type: "spring" }}
+              className="text-center p-6 rounded-2xl glass-premium hover-lift group cursor-pointer"
+            >
+              <div className="font-display text-3xl sm:text-4xl font-bold gradient-text mb-2 group-hover:text-glow transition-all">
                 {stat.value}
               </div>
-              <div className="text-muted-foreground text-sm">{stat.label}</div>
-            </div>
+              <div className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">{stat.label}</div>
+            </motion.div>
           ))}
         </motion.div>
 
-        {/* Vision & Mission */}
+        {/* Enhanced Vision & Mission */}
         <div className="grid md:grid-cols-2 gap-8 mb-20">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="p-8 rounded-2xl gradient-border"
+            transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
+            className="p-8 rounded-2xl gradient-border-animated hover-lift group"
           >
-            <h3 className="font-display text-2xl font-bold mb-4">Our Vision</h3>
+            <h3 className="font-display text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Our Vision</h3>
             <p className="text-muted-foreground leading-relaxed">
-              To be the world's most trusted AI automation partner, enabling every business 
-              to harness the power of artificial intelligence to achieve unprecedented growth 
+              To be the world's most trusted AI automation partner, enabling every business
+              to harness the power of artificial intelligence to achieve unprecedented growth
               and efficiency.
             </p>
           </motion.div>
@@ -97,19 +104,19 @@ export const About = () => {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="p-8 rounded-2xl gradient-border"
+            transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
+            className="p-8 rounded-2xl gradient-border-animated hover-lift group"
           >
-            <h3 className="font-display text-2xl font-bold mb-4">Our Mission</h3>
+            <h3 className="font-display text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Our Mission</h3>
             <p className="text-muted-foreground leading-relaxed">
-              To deliver transformative AI automation solutions that eliminate repetitive tasks, 
-              optimize workflows, and empower businesses to focus on what they do best—growing 
+              To deliver transformative AI automation solutions that eliminate repetitive tasks,
+              optimize workflows, and empower businesses to focus on what they do best—growing
               and innovating.
             </p>
           </motion.div>
         </div>
 
-        {/* Values */}
+        {/* Enhanced Values */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -121,14 +128,16 @@ export const About = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-              className="p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 transition-colors duration-300 group"
+              transition={{ duration: 0.5, delay: 0.6 + index * 0.1, type: "spring", stiffness: 100 }}
+              className="p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/50 transition-all duration-500 hover-lift group float"
+              style={{ animationDelay: `${index * 0.5}s` }}
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                <value.icon className="w-6 h-6 text-primary" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center mb-4 group-hover:from-primary/25 group-hover:to-accent/20 transition-all duration-500 group-hover:scale-110 relative">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-accent opacity-0 group-hover:opacity-20 blur-lg transition-opacity" />
+                <value.icon className="w-6 h-6 text-primary relative z-10 group-hover:scale-110 transition-transform" />
               </div>
-              <h4 className="font-display font-semibold text-lg mb-2">{value.title}</h4>
-              <p className="text-muted-foreground text-sm">{value.description}</p>
+              <h4 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{value.title}</h4>
+              <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
             </motion.div>
           ))}
         </motion.div>

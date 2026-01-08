@@ -9,12 +9,13 @@ export const FinalCTA = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-accent/20" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.15),transparent_60%)]" />
-      
+      {/* Enhanced Background with animation */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-background to-accent/25 gradient-animated" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.2),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--accent)/0.15),transparent_60%)]" />
+
       {/* Grid Pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
@@ -35,10 +36,9 @@ export const FinalCTA = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Ready to Transform Your Business?</span>
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-premium mb-8 shimmer glow-soft">
+            <Sparkles className="w-4 h-4 text-primary animate-pulse-glow" />
+            <span className="text-sm font-medium text-muted-foreground">Ready to Transform Your Business?</span>
           </motion.div>
 
           <motion.h2
@@ -48,16 +48,16 @@ export const FinalCTA = () => {
             className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
             Ready to Automate & Scale Your Business{" "}
-            <span className="gradient-text">with AI?</span>
+            <span className="gradient-text text-glow">with AI?</span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto mb-10"
+            className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Book a free consultation and discover how AI automation can transform 
+            Book a free consultation and discover how AI automation can transform
             your operations, reduce costs, and accelerate growth.
           </motion.p>
 
@@ -67,10 +67,10 @@ export const FinalCTA = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button variant="hero" size="xl" asChild>
+            <Button variant="hero" size="xl" asChild className="glow-intense hover-glow group magnetic">
               <a href="#contact" className="flex items-center gap-2">
                 Book Free AI Consultation
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </motion.div>
@@ -82,16 +82,16 @@ export const FinalCTA = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-12 flex flex-wrap justify-center gap-8 text-sm text-muted-foreground"
           >
-            <span className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="flex items-center gap-2 group">
+              <div className="w-2 h-2 rounded-full bg-green-500 glow-soft group-hover:scale-125 transition-transform" />
               Free Consultation
             </span>
-            <span className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="flex items-center gap-2 group">
+              <div className="w-2 h-2 rounded-full bg-green-500 glow-soft group-hover:scale-125 transition-transform" />
               No Commitment Required
             </span>
-            <span className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="flex items-center gap-2 group">
+              <div className="w-2 h-2 rounded-full bg-green-500 glow-soft group-hover:scale-125 transition-transform" />
               Results in Weeks
             </span>
           </motion.div>

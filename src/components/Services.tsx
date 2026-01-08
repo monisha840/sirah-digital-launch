@@ -1,14 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { 
-  Bot, 
-  MessageSquare, 
-  Workflow, 
-  Target, 
-  Calendar, 
-  Smartphone, 
+import {
+  Bot,
+  MessageSquare,
+  Workflow,
+  Target,
+  Calendar,
+  Smartphone,
   Puzzle,
-  ArrowRight 
+  ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -63,60 +63,76 @@ export const Services = () => {
 
   return (
     <section id="services" className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+      {/* Enhanced Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]" />
 
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, type: "spring" }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Our Services</span>
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider shimmer">Our Services</span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             AI Automation Solutions{" "}
-            <span className="gradient-text">Built for Growth</span>
+            <span className="gradient-text text-glow">Built for Growth</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            From chatbots to complete workflow automation, we deliver AI solutions 
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            From chatbots to complete workflow automation, we deliver AI solutions
             that transform how your business operates.
           </p>
         </motion.div>
 
-        {/* Services Grid */}
+        {/* Enhanced Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+              transition={{
+                duration: 0.6,
+                delay: index * 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
+              className="group relative p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/50 transition-all duration-500 hover-lift overflow-hidden"
             >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                <service.icon className="w-7 h-7 text-primary" />
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-500 group-hover:rotate-3">
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-accent opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+                  <service.icon className="w-7 h-7 text-primary relative z-10" />
+                </div>
+
+                <h3 className="font-display text-xl font-semibold mb-3 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{service.description}</p>
+
+                <ul className="space-y-2 mb-6">
+                  {service.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground group/item">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary group-hover/item:scale-125 transition-transform" />
+                      <span className="group-hover/item:text-foreground transition-colors">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all duration-300 group/link"
+                >
+                  Learn More <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                </a>
               </div>
 
-              <h3 className="font-display text-xl font-semibold mb-3">{service.title}</h3>
-              <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{service.description}</p>
-
-              <ul className="space-y-2 mb-6">
-                {service.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <a 
-                href="#contact" 
-                className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all duration-200"
-              >
-                Learn More <ArrowRight className="w-4 h-4" />
-              </a>
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 glow-soft pointer-events-none" />
             </motion.div>
           ))}
         </div>
@@ -131,7 +147,7 @@ export const Services = () => {
           <p className="text-muted-foreground mb-6">
             Not sure which service is right for you?
           </p>
-          <Button variant="hero" size="lg" asChild>
+          <Button variant="hero" size="lg" asChild className="glow-primary hover-lift">
             <a href="#contact">Get a Free Consultation</a>
           </Button>
         </motion.div>

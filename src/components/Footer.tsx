@@ -33,26 +33,32 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="py-16 border-t border-border/50 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent" />
+    <footer className="py-16 border-t border-border/30 relative overflow-hidden">
+      {/* Enhanced Background with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <a href="#home" className="flex items-center gap-3 mb-4">
-              <img src={logo} alt="SIRAH DIGITAL" className="w-10 h-10 rounded-lg object-cover" />
+            <a href="#home" className="flex items-center gap-3 mb-4 group">
+              <motion.img
+                src={logo}
+                alt="SIRAH DIGITAL"
+                className="w-10 h-10 rounded-lg object-cover ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all"
+                whileHover={{ scale: 1.05 }}
+              />
               <span className="font-display font-bold text-xl text-foreground">
                 SIRAH <span className="gradient-text">DIGITAL</span>
               </span>
             </a>
             <p className="text-muted-foreground text-sm mb-6 max-w-sm">
-              Transforming businesses with intelligent AI automation solutions. 
+              Transforming businesses with intelligent AI automation solutions.
               We help you work smarter, scale faster, and grow without limits.
             </p>
 
-            <Button variant="hero" size="lg" asChild className="mb-6">
+            <Button variant="hero" size="lg" asChild className="mb-6 glow-primary hover-lift">
               <a href="#contact">Book Free Consultation</a>
             </Button>
 
@@ -63,9 +69,8 @@ export const Footer = () => {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-colors duration-200"
-                >
-                  <social.icon className="w-5 h-5" />
+                  className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300 glow-soft group">
+                  <social.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </a>
               ))}
             </div>
@@ -77,10 +82,9 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a 
+                  <a
                     href={link.href}
-                    className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                  >
+                    className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300 hover:translate-x-1 inline-block">
                     {link.name}
                   </a>
                 </li>
@@ -94,10 +98,9 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
-                  <a 
+                  <a
                     href={link.href}
-                    className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                  >
+                    className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300 hover:translate-x-1 inline-block">
                     {link.name}
                   </a>
                 </li>
@@ -111,7 +114,7 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a 
+                  <a
                     href={link.href}
                     className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200 inline-flex items-center gap-1"
                   >

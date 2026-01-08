@@ -99,10 +99,19 @@
 }
 
 @layer utilities {
+  /* Gradient Text */
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
   }
 
+  /* Animated Gradient Background */
+  .gradient-animated {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1), hsl(var(--primary) / 0.1));
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  /* Enhanced Gradient Borders */
   .gradient-border {
     @apply relative;
     background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
@@ -110,6 +119,28 @@
     border: 1px solid transparent;
   }
 
+  .gradient-border-animated {
+    @apply relative overflow-hidden;
+    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+                linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))) border-box;
+    border: 2px solid transparent;
+  }
+
+  .gradient-border-animated::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.8;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  /* Glow Effects */
   .glow-primary {
     box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.5);
   }
@@ -118,11 +149,133 @@
     box-shadow: 0 0 40px -10px hsl(var(--accent) / 0.5);
   }
 
+  .glow-soft {
+    box-shadow: 0 0 30px -12px hsl(var(--primary) / 0.3),
+                0 0 60px -15px hsl(var(--accent) / 0.2);
+  }
+
+  .glow-intense {
+    box-shadow: 0 0 50px -5px hsl(var(--primary) / 0.6),
+                0 0 100px -10px hsl(var(--accent) / 0.4),
+                0 0 150px -20px hsl(var(--primary) / 0.2);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.5),
+                 0 0 40px hsl(var(--accent) / 0.3);
+  }
+
+  /* Premium Glassmorphism */
   .glass {
     @apply bg-card/80 backdrop-blur-xl border border-border/50;
   }
 
+  .glass-premium {
+    @apply bg-card/70 backdrop-blur-2xl border border-border/30;
+    background: linear-gradient(135deg, hsl(var(--card) / 0.7), hsl(var(--card) / 0.5)) padding-box,
+                linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.2)) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2;
+    box-shadow: 0 20px 40px -10px hsl(var(--primary) / 0.3),
+                0 0 60px -15px hsl(var(--accent) / 0.3);
+  }
+
+  .hover-glow:hover {
+    @apply glow-intense;
+  }
+
+  .hover-scale:hover {
+    @apply scale-105;
+  }
+
+  /* Magnetic Hover Effect */
+  .magnetic {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Card Styles */
+  .card-premium {
+    @apply relative p-6 rounded-2xl bg-card/50 border border-border/50 transition-all duration-300;
+    @apply hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10;
+  }
+
+  .card-premium:hover {
+    @apply -translate-y-1;
+  }
+
+  /* Text Balance */
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Floating Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Pulse Glow Animation */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Smooth Transitions */
+  .smooth-transition {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Perspective for 3D effects */
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Enhanced Shadows */
+  .shadow-premium {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3),
+                0 0 20px -5px hsl(var(--primary) / 0.1);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 10px 30px -5px hsl(var(--primary) / 0.2),
+                0 0 50px -10px hsl(var(--accent) / 0.2);
+  }
+
+  /* Backdrop Effects */
+  .backdrop-premium {
+    backdrop-filter: blur(20px) saturate(180%);
   }
 }

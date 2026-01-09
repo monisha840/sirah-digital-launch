@@ -68,7 +68,7 @@ export const FinalCTA = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button variant="hero" size="xl" asChild className="glow-intense hover-glow group magnetic">
-              <a href="#contact" className="flex items-center gap-2">
+              <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                 Book Free AI Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>

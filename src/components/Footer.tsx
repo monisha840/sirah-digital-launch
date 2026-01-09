@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Linkedin, Twitter, Instagram, Youtube } from "lucide-react";
+import { Facebook, MessageCircle, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpeg";
 
@@ -23,10 +23,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Youtube, href: "#", label: "YouTube" },
+  { icon: Facebook, href: "https://www.facebook.com/share/1C8e4h74gr/", label: "Facebook" },
+  { icon: MessageCircle, href: "https://wa.link/zebr1n", label: "WhatsApp" },
+  { icon: Instagram, href: "https://www.instagram.com/sirah_digital?igsh=MWdqMHNscWNsdTFucg==", label: "Instagram" },
+  { icon: Youtube, href: "https://www.youtube.com/@riyazlive", label: "YouTube" },
 ];
 
 export const Footer = () => {
@@ -37,7 +37,7 @@ export const Footer = () => {
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#home" className="flex items-center gap-3 mb-4 group">
@@ -57,7 +57,7 @@ export const Footer = () => {
             </p>
 
             <Button variant="hero" size="lg" asChild className="mb-6 glow-primary hover-lift">
-              <a href="#contact">Book Free Consultation</a>
+              <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
             </Button>
 
             {/* Social Links */}
@@ -66,6 +66,8 @@ export const Footer = () => {
                 <a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300 glow-soft group">
                   <social.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -103,6 +105,31 @@ export const Footer = () => {
                   </a>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Contact Section */}
+          <div>
+            <h4 className="font-display font-semibold mb-4">Contact</h4>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-2">
+                <Mail className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                <a href="mailto:support@sirahdigital.in" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  support@sirahdigital.in
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <Phone className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                <a href="tel:+919789961631" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  +91 97899 61631
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                <span className="text-muted-foreground text-sm">
+                  8th Floor, Innovate, Featherlite – The Address, 200 Feet Radial Rd, Zamin Pallavaram, Chennai, Tamil Nadu – 600044
+                </span>
+              </li>
             </ul>
           </div>
 

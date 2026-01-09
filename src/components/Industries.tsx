@@ -11,7 +11,8 @@ import {
   Apple,
   Scan,
   Leaf,
-  Activity
+  Activity,
+  Droplet
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -45,6 +46,12 @@ const industries = [
     name: "Psychology & Mental Health",
     description: "Simplify session booking, patient intake, and follow-up care with sensitive, automated communication workflows.",
     useCases: ["Session scheduling", "Intake forms", "Wellness check-ins"],
+  },
+  {
+    icon: Droplet,
+    name: "Urologist",
+    description: "AI-powered appointment scheduling, patient follow-ups, lead management, and clinic workflow automation for urology practices.",
+    useCases: ["Appointment automation", "Patient follow-ups", "Clinic workflow"],
   },
   {
     icon: Heart,
@@ -154,7 +161,7 @@ export const Industries = () => {
             Don't see your industry? We create custom AI solutions for any business.
           </p>
           <Button variant="heroOutline" size="lg" asChild className="hover-lift">
-            <a href="#contact">Discuss Your Needs</a>
+            <a href="/contact">Discuss Your Needs</a>
           </Button>
         </motion.div>
       </div>

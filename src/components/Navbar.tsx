@@ -11,7 +11,7 @@ const navLinks = [
   { name: "Industries", path: "/industries" },
   { name: "Why Us", path: "/why-us" },
   { name: "Process", path: "/process" },
-  { name: "Team", path: "/team" },
+  { name: "Brains", path: "/team" },
   { name: "Contact", path: "/contact" },
 ];
 
@@ -71,9 +71,9 @@ export const Navbar = () => {
 
         <div className="hidden lg:block">
           <Button variant="hero" size="lg" asChild className="glow-primary hover-lift group">
-            <Link to="/contact" className="flex items-center gap-2">
+            <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               Book Free Consultation
-            </Link>
+            </a>
           </Button>
         </div>
 
@@ -115,9 +115,9 @@ export const Navbar = () => {
                 </Link>
               ))}
               <Button variant="hero" size="lg" className="mt-4 glow-primary" asChild>
-                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
                   Book Free Consultation
-                </Link>
+                </a>
               </Button>
             </nav>
           </motion.div>

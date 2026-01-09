@@ -123,12 +123,16 @@ export const Services = () => {
                   ))}
                 </ul>
 
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all duration-300 group/link"
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="group/btn hover:scale-105 hover:translate-x-1 transition-all duration-300 border-primary/30 hover:border-primary/60"
                 >
-                  Learn More <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                </a>
+                  <a href="/contact" className="flex items-center gap-2">
+                    Connect <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
               </div>
 
               {/* Glow effect on hover */}
@@ -148,7 +152,7 @@ export const Services = () => {
             Not sure which service is right for you?
           </p>
           <Button variant="hero" size="lg" asChild className="glow-primary hover-lift">
-            <a href="#contact">Get a Free Consultation</a>
+            <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer">Get a Free Consultation</a>
           </Button>
         </motion.div>
       </div>

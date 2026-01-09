@@ -154,13 +154,13 @@ export const Hero = () => {
                                 className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4"
                             >
                                 <Button variant="hero" size="xl" asChild className="glow-primary hover-glow group">
-                                    <a href="#contact" className="flex items-center gap-2">
+                                    <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                                         Book Free AI Consultation
                                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </a>
                                 </Button>
                                 <Button variant="heroOutline" size="xl" asChild className="hover-lift">
-                                    <a href="#services">Explore Our AI Solutions</a>
+                                    <a href="/services">Explore Our AI Solutions</a>
                                 </Button>
                             </motion.div>
                         </div>

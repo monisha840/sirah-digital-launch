@@ -45,6 +45,48 @@ export const Process = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.1),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--accent)/0.08),transparent_50%)]" />
 
+      {/* Animated Background Motion Graphics */}
+      <motion.div
+        animate={{
+          x: [-100, 100, -100],
+          y: [-50, 50, -50],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br from-primary/5 to-accent/5 blur-[100px] opacity-40"
+      />
+      <motion.div
+        animate={{
+          x: [100, -100, 100],
+          y: [50, -50, 50],
+          scale: [1.2, 1, 1.2],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-gradient-to-br from-accent/5 to-primary/5 blur-[120px] opacity-30"
+      />
+      <motion.div
+        animate={{
+          rotate: [0, 360],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 40,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-20"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent blur-[80px]" style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }} />
+      </motion.div>
+
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div

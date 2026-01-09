@@ -15,12 +15,40 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      company: formData.get('company'),
+      message: formData.get('message')
+    };
 
-    toast.success("Thank you! We'll be in touch within 24 hours.");
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+    try {
+      // Send to Node.js backend
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success(result.message || "Thank you! We'll be in touch within 24 hours.");
+        (e.target as HTMLFormElement).reset();
+      } else {
+        toast.error(result.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error("Failed to send message. Please try again or email us directly at support@sirahdigital.in");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -61,10 +89,10 @@ export const Contact = () => {
               <Calendar className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" />
               <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors">Book Free Consultation</h3>
               <p className="text-muted-foreground text-sm mb-4">
-                30-minute strategy call with our AI experts. No obligations, just value.
+                45 minutes strategy call with our AI experts. No obligations, just value.
               </p>
               <Button variant="hero" className="w-full glow-primary" asChild>
-                <a href="#contact" className="flex items-center justify-center gap-2">
+                <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
                   Schedule Now <ArrowRight className="w-4 h-4" />
                 </a>
               </Button>
@@ -78,8 +106,8 @@ export const Contact = () => {
                 </div>
                 <div>
                   <div className="font-medium mb-1">Email Us</div>
-                  <a href="mailto:hello@sirahdigital.com" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                    hello@sirahdigital.com
+                  <a href="mailto:support@sirahdigital.in" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                    support@sirahdigital.in
                   </a>
                 </div>
               </div>
@@ -90,8 +118,8 @@ export const Contact = () => {
                 </div>
                 <div>
                   <div className="font-medium mb-1">Call Us</div>
-                  <a href="tel:+1234567890" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                    +1 (234) 567-890
+                  <a href="tel:+919789961631" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                    +91 97899 61631
                   </a>
                 </div>
               </div>
@@ -103,7 +131,9 @@ export const Contact = () => {
                 <div>
                   <div className="font-medium mb-1">Location</div>
                   <span className="text-muted-foreground text-sm">
-                    Serving clients worldwide
+                    8th Floor, Innovate, Featherlite – The Address<br />
+                    200 Feet Radial Rd, Zamin Pallavaram<br />
+                    Chennai, Tamil Nadu – 600044
                   </span>
                 </div>
               </div>
@@ -118,12 +148,14 @@ export const Contact = () => {
             className="lg:col-span-3"
           >
             <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card/60 border border-border/50 glass-premium">
+              <input type="hidden" name="_subject" value="New Contact Form Submission – Sirah Digital" />
               <h3 className="font-display text-2xl font-semibold mb-6 gradient-text">Send us a message</h3>
 
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">First Name *</label>
                   <Input
+                    name="firstName"
                     required
                     placeholder="John"
                     className="bg-background/50 border-border/50 focus:border-primary"
@@ -132,6 +164,7 @@ export const Contact = () => {
                 <div>
                   <label className="block text-sm font-medium mb-2">Last Name *</label>
                   <Input
+                    name="lastName"
                     required
                     placeholder="Doe"
                     className="bg-background/50 border-border/50 focus:border-primary"
@@ -143,6 +176,7 @@ export const Contact = () => {
                 <div>
                   <label className="block text-sm font-medium mb-2">Email *</label>
                   <Input
+                    name="email"
                     type="email"
                     required
                     placeholder="john@company.com"
@@ -152,6 +186,7 @@ export const Contact = () => {
                 <div>
                   <label className="block text-sm font-medium mb-2">Phone</label>
                   <Input
+                    name="phone"
                     type="tel"
                     placeholder="+1 (234) 567-890"
                     className="bg-background/50 border-border/50 focus:border-primary"
@@ -162,6 +197,7 @@ export const Contact = () => {
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Company</label>
                 <Input
+                  name="company"
                   placeholder="Your Company Name"
                   className="bg-background/50 border-border/50 focus:border-primary"
                 />
@@ -170,6 +206,7 @@ export const Contact = () => {
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-2">Tell us about your automation needs *</label>
                 <Textarea
+                  name="message"
                   required
                   rows={4}
                   placeholder="Describe your business challenges and what you'd like to automate..."
@@ -188,7 +225,7 @@ export const Contact = () => {
                   "Sending..."
                 ) : (
                   <>
-                    Send Message <Send className="w-4 h-4 ml-2" />
+                    SUBMIT <Send className="w-4 h-4 ml-2" />
                   </>
                 )}
               </Button>

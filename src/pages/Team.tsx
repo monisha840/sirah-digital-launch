@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { Facebook, Twitter, Youtube, Instagram } from "lucide-react";
+import { Facebook, MessageCircle, Youtube, Instagram } from "lucide-react";
 
 const founder = {
     name: "MOHAMMAD RIYAZ",
@@ -76,20 +76,21 @@ export default function Team() {
                             {founder.description}
                         </p>
 
+
                         {/* Social Icons */}
                         <div className="flex gap-4">
-                            <div className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
+                            <a href="https://www.facebook.com/share/1C8e4h74gr/" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
                                 <Facebook className="w-5 h-5 text-primary" />
-                            </div>
-                            <div className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
-                                <Twitter className="w-5 h-5 text-primary" />
-                            </div>
-                            <div className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
+                            </a>
+                            <a href="https://wa.link/zebr1n" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
+                                <MessageCircle className="w-5 h-5 text-primary" />
+                            </a>
+                            <a href="https://www.youtube.com/@riyazlive" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
                                 <Youtube className="w-5 h-5 text-primary" />
-                            </div>
-                            <div className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
+                            </a>
+                            <a href="https://www.instagram.com/sirah_digital?igsh=MWdqMHNscWNsdTFucg==" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border-2 border-primary/60 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer glow-soft">
                                 <Instagram className="w-5 h-5 text-primary" />
-                            </div>
+                            </a>
                         </div>
                     </div>
 

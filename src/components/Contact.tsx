@@ -184,10 +184,11 @@ export const Contact = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Phone</label>
+                  <label className="block text-sm font-medium mb-2">Phone *</label>
                   <Input
                     name="phone"
                     type="tel"
+                    required
                     placeholder="+1 (234) 567-890"
                     className="bg-background/50 border-border/50 focus:border-primary"
                   />

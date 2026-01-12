@@ -114,6 +114,18 @@ export default {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        "breathe": {
+          "0%, 100%": { transform: "scale(1)", boxShadow: "0 0 20px rgba(6,182,212,0.5)" },
+          "50%": { transform: "scale(1.1)", boxShadow: "0 0 30px rgba(168,85,247,0.6)" },
+        },
+        "modern-breathe": {
+          "0%, 100%": { transform: "scale(1)", boxShadow: "0 0 15px rgba(6,182,212,0.4)" },
+          "50%": { transform: "scale(1.05)", boxShadow: "0 0 45px rgba(168,85,247,0.7)" },
+        },
+        "ripple": {
+          "0%": { transform: "scale(0.8)", opacity: "1" },
+          "100%": { transform: "scale(2)", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -126,6 +138,9 @@ export default {
         "scale-in": "scale-in 0.5s ease-out",
         "slide-up": "slide-up 0.6s ease-out",
         "rotate-slow": "rotate-slow 20s linear infinite",
+        "breathe": "breathe 3s ease-in-out infinite",
+        "modern-breathe": "modern-breathe 2.5s ease-in-out infinite",
+        "ripple": "ripple 3s cubic-bezier(0, 0, 0.2, 1) infinite",
       },
       backgroundSize: {
         "200%": "200% 200%",

@@ -3,13 +3,14 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, Calendar, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Calendar, ArrowRight, CheckCircle2, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
 export const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +28,8 @@ export const Contact = () => {
 
     try {
       // Send to Node.js backend
-      const response = await fetch("http://localhost:5000/api/contact", {
+      // Using relative path via Vite Proxy (resolves Mixed Content issues)
+      const response = await fetch("/api/leads", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -38,7 +40,8 @@ export const Contact = () => {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        toast.success(result.message || "Thank you! We'll be in touch within 24 hours.");
+        toast.success(result.message || "Thank you! We'll be in touch within 4 hours.");
+        setIsSubmitted(true);
         (e.target as HTMLFormElement).reset();
       } else {
         toast.error(result.message || "Something went wrong. Please try again.");
@@ -147,94 +150,117 @@ export const Contact = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card/60 border border-border/50 glass-premium">
-              <input type="hidden" name="_subject" value="New Contact Form Submission – Sirah Digital" />
-              <h3 className="font-display text-2xl font-semibold mb-6 gradient-text">Send us a message</h3>
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card/60 border border-border/50 glass-premium">
+                <input type="hidden" name="_subject" value="New Contact Form Submission – Sirah Digital" />
+                <h3 className="font-display text-2xl font-semibold mb-6 gradient-text">Send us a message</h3>
 
-              <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">First Name *</label>
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">First Name *</label>
+                    <Input
+                      name="firstName"
+                      required
+                      placeholder="John"
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Last Name *</label>
+                    <Input
+                      name="lastName"
+                      required
+                      placeholder="Doe"
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Email *</label>
+                    <Input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="john@company.com"
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Phone *</label>
+                    <Input
+                      name="phone"
+                      type="tel"
+                      required
+                      placeholder="+1 (234) 567-890"
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-2">Company</label>
                   <Input
-                    name="firstName"
-                    required
-                    placeholder="John"
+                    name="company"
+                    placeholder="Your Company Name"
                     className="bg-background/50 border-border/50 focus:border-primary"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Last Name *</label>
-                  <Input
-                    name="lastName"
+
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Tell us about your automation needs *</label>
+                  <Textarea
+                    name="message"
                     required
-                    placeholder="Doe"
-                    className="bg-background/50 border-border/50 focus:border-primary"
+                    rows={4}
+                    placeholder="Describe your business challenges and what you'd like to automate..."
+                    className="bg-background/50 border-border/50 focus:border-primary resize-none"
                   />
                 </div>
-              </div>
 
-              <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email *</label>
-                  <Input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="john@company.com"
-                    className="bg-background/50 border-border/50 focus:border-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Phone *</label>
-                  <Input
-                    name="phone"
-                    type="tel"
-                    required
-                    placeholder="+1 (234) 567-890"
-                    className="bg-background/50 border-border/50 focus:border-primary"
-                  />
-                </div>
-              </div>
+                <Button
+                  type="submit"
+                  variant="hero"
+                  size="lg"
+                  className="w-full glow-primary hover-glow"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      SUBMIT <Send className="w-4 h-4 ml-2" />
+                    </>
+                  )}
+                </Button>
 
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Company</label>
-                <Input
-                  name="company"
-                  placeholder="Your Company Name"
-                  className="bg-background/50 border-border/50 focus:border-primary"
-                />
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-sm font-medium mb-2">Tell us about your automation needs *</label>
-                <Textarea
-                  name="message"
-                  required
-                  rows={4}
-                  placeholder="Describe your business challenges and what you'd like to automate..."
-                  className="bg-background/50 border-border/50 focus:border-primary resize-none"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                variant="hero"
-                size="lg"
-                className="w-full glow-primary hover-glow"
-                disabled={isSubmitting}
+                <p className="text-muted-foreground text-xs text-center mt-4">
+                  We'll respond within 4 hours. Your information is safe with us.
+                </p>
+              </form>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-12 rounded-2xl bg-card/60 border border-primary/30 glass-premium text-center flex flex-col items-center"
               >
-                {isSubmitting ? (
-                  "Sending..."
-                ) : (
-                  <>
-                    SUBMIT <Send className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-
-              <p className="text-muted-foreground text-xs text-center mt-4">
-                We'll respond within 24 hours. Your information is safe with us.
-              </p>
-            </form>
+                <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mb-6 animate-pulse-subtle">
+                  <CheckCircle2 className="w-12 h-12 text-primary" />
+                </div>
+                <h3 className="font-display text-3xl font-bold mb-4 gradient-text">Form Submitted!</h3>
+                <p className="text-muted-foreground text-lg mb-8 max-w-sm mx-auto">
+                  Thank you for reaching out. Our AI experts have received your request and will contact you within 4 hours.
+                </p>
+                <Button
+                  onClick={() => setIsSubmitted(false)}
+                  variant="outline"
+                  className="gap-2 hover:bg-primary/10 border-primary/20"
+                >
+                  <RefreshCcw className="w-4 h-4" /> Send Another Message
+                </Button>
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </div>

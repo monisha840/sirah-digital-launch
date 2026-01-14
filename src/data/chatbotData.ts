@@ -53,12 +53,36 @@ export const whyUsReasons = [
 ];
 
 export const teamMembers = [
-    "Mohammad Riyaz (Founder)",
-    "Jesheeba Fathima (Growth Consultant)",
-    "Monisha (Growth Consultant)",
-    "Eshwanth (Brand Consultant)",
-    "Abdul Samad (AI Engineer)",
-    "Aakash Kummar (AI Engineer)"
+    {
+        name: "MOHAMMAD RIYAZ",
+        designation: "Founder – SIRAH DIGITAL",
+        description: "Visionary leader driving AI-powered digital growth and automation-focused business solutions."
+    },
+    {
+        name: "M. JESHEEBA FATHIMA",
+        designation: "Digital Growth Consultant",
+        description: "Driving strategic digital transformation and growth initiatives for businesses."
+    },
+    {
+        name: "SS. MONISHA",
+        designation: "Digital Growth Consultant",
+        description: "Specializing in data-driven growth strategies and digital marketing solutions."
+    },
+    {
+        name: "B. ESHWANTH",
+        designation: "Brand Growth Consultant",
+        description: "Building powerful brand identities and comprehensive growth frameworks."
+    },
+    {
+        name: "ABDUL SAMAD",
+        designation: "AI Automation Engineer",
+        description: "Developing intelligent automation systems and AI-powered solutions."
+    },
+    {
+        name: "I. AAKASH KUMMAR",
+        designation: "AI Automation Engineer",
+        description: "Creating scalable AI workflows and automation infrastructure."
+    }
 ];
 
 export const testimonials = [
@@ -190,6 +214,14 @@ export const getBotResponse = (input: string, lang: Language): string => {
         return staticResponses.inPerson[lang];
     }
 
+    // 12. Team / Brains (MOVED UP for Priority)
+    if (lowerInput.match(/\b(team|brains|founder|people|staff|consultants|engineers|developer|expert|employee|குழு|உறுப்பினர்கள்)\b/)) {
+        const teamList = teamMembers.map(t => `- ${t.name}`).join("\n");
+        return lang === 'en'
+            ? `Meet the brains behind Sirah Digital:\n${teamList}`
+            : `Sirah Digital-ன் திறமையான குழு:\n${teamList}`;
+    }
+
     // 8. About Us
     if (lowerInput.match(/\b(who are you|about|company|agency|sirah|story|mission|vision|பற்றி|நிறுவனம்)\b/)) {
         return staticResponses.about[lang];
@@ -213,13 +245,7 @@ export const getBotResponse = (input: string, lang: Language): string => {
             : `நாங்கள் இந்தத் துறைகளில் கவனம் செலுத்துகிறோம்:\n${industryList}`;
     }
 
-    // 12. Team / Brains
-    if (lowerInput.match(/\b(team|brains|founder|people|staff|consultants|engineers|developer|expert|employee|குழு|உறுப்பினர்கள்)\b/)) {
-        const teamList = teamMembers.map(t => `- ${t}`).join("\n");
-        return lang === 'en'
-            ? `Meet the brains behind Sirah Digital:\n${teamList}`
-            : `Sirah Digital-ன் திறமையான குழு:\n${teamList}`;
-    }
+
 
     // 13. Why Us
     if (lowerInput.match(/\b(why|choose|special|different|unique|better|competitor|advantage|ஏன்|சிறப்பு)\b/) && !lowerInput.match(/\b(ai|automation)\b/)) {

@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, DollarSign, TrendingUp, Headphones } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
-import aiHeroVisual from "@/assets/ai-hero-visual.png";
+import aiHeroVisual from "@/assets/new-robot-visual.png";
+
 
 const benefits = [
     { icon: Clock, text: "Save hours every day on manual tasks" },
@@ -177,16 +178,22 @@ export const Hero = () => {
                             }}
                         >
                             {/* AI Visual Image with floating and breathe animation */}
-                            <motion.img
-                                src={aiHeroVisual}
-                                alt="AI Intelligence Visualization"
+                            <motion.div
                                 animate={{
                                     y: [-8, 8, -8],
                                     scale: [1, 1.02, 1],
                                 }}
                                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                                className="relative w-full max-w-xl h-auto object-contain opacity-90"
-                            />
+                                className="relative w-full max-w-xl mx-auto"
+                            >
+                                <img
+                                    src={aiHeroVisual}
+                                    alt="AI Intelligence Visualization"
+                                    className="relative w-full h-auto object-contain opacity-90"
+                                />
+
+
+                            </motion.div>
                         </motion.div>
 
                         {/* Mobile Image - Below content */}

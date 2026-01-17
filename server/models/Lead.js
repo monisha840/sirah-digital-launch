@@ -24,9 +24,13 @@ const leadSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please add a message'],
         },
+        notes: {
+            type: String,
+            default: '',
+        },
         status: {
             type: String,
-            enum: ['new', 'contacted', 'qualified', 'converted', 'closed'],
+            enum: ['new', 'contacted', 'qualified', 'not qualified', 'converted', 'closed'],
             default: 'new',
         },
     },

@@ -6,8 +6,12 @@ const { validationResult } = require('express-validator');
 // @route   POST /api/leads
 // @access  Public
 const createLead = async (req, res) => {
+    console.log('--- Incoming Lead Request ---');
+    console.log('Body:', req.body);
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.error('Validation Errors:', errors.array());
         return res.status(400).json({ errors: errors.array() });
     }
 
@@ -34,6 +38,7 @@ const createLead = async (req, res) => {
             company,
             message,
         });
+        console.log('✅ Lead Created in DB:', lead._id);
 
         // 2. Send Email (using existing logic)
         // Configure Nodemailer transporter with Gmail SMTP
@@ -72,19 +77,24 @@ const createLead = async (req, res) => {
         // 3. n8n Automation (WhatsApp)
         if (process.env.N8N_WEBHOOK_URL) {
             try {
+                const n8nPayload = {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    company,
+                    message,
+                    leadId: lead._id,
+                    submittedAt: lead.createdAt
+                };
+                console.log('--- Sending to n8n ---');
+                console.log('URL:', process.env.N8N_WEBHOOK_URL);
+                console.log('Payload:', JSON.stringify(n8nPayload, null, 2));
+
                 const n8nResponse = await fetch(process.env.N8N_WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        firstName,
-                        lastName,
-                        email,
-                        phone,
-                        company,
-                        message,
-                        leadId: lead._id,
-                        submittedAt: lead.createdAt
-                    })
+                    body: JSON.stringify(n8nPayload)
                 });
 
                 const responseText = await n8nResponse.text();
@@ -108,7 +118,7 @@ const createLead = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error('❌ Server Error during Lead Creation:', error);
         res.status(500).json({ message: 'Server Error' });
     }
 };
@@ -125,7 +135,59 @@ const getLeads = async (req, res) => {
     }
 };
 
+// @desc    Update lead
+// @route   PUT /api/leads/:id
+// @access  Private/Admin
+const updateLead = async (req, res) => {
+    try {
+        const lead = await Lead.findById(req.params.id);
+
+        if (lead) {
+            lead.firstName = req.body.firstName || lead.firstName;
+            lead.lastName = req.body.lastName || lead.lastName;
+            lead.email = req.body.email || lead.email;
+            lead.phone = req.body.phone || lead.phone;
+            lead.company = req.body.company || lead.company;
+            lead.status = req.body.status || lead.status;
+            lead.notes = req.body.notes !== undefined ? req.body.notes : lead.notes;
+
+            // Only update message if specifically provided (usually read-only)
+            if (req.body.message) {
+                lead.message = req.body.message;
+            }
+
+            const updatedLead = await lead.save();
+            res.json(updatedLead);
+        } else {
+            res.status(404).json({ message: 'Lead not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+// @desc    Delete lead
+// @route   DELETE /api/leads/:id
+// @access  Private/Admin
+const deleteLead = async (req, res) => {
+    try {
+        const lead = await Lead.findById(req.params.id);
+
+        if (lead) {
+            await lead.deleteOne();
+            res.json({ message: 'Lead removed' });
+        } else {
+            res.status(404).json({ message: 'Lead not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting lead:', error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 module.exports = {
     createLead,
     getLeads,
+    updateLead,
+    deleteLead,
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { createLead, getLeads } = require('../controllers/leadController');
+const { createLead, getLeads, updateLead, deleteLead } = require('../controllers/leadController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 router.post(
@@ -16,5 +16,7 @@ router.post(
 );
 
 router.get('/', protect, admin, getLeads);
+router.put('/:id', protect, admin, updateLead);
+router.delete('/:id', protect, admin, deleteLead);
 
 module.exports = router;

@@ -48,9 +48,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`\n🚀 SIRAH DIGITAL Backend Server`);
-  console.log(`📍 Server running on http://localhost:${PORT}`);
-  console.log(`💽 MongoDB URI: ${process.env.MONGO_URI ? 'Defined' : 'Not Defined'}`);
-});
+// Start server if running directly
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 SIRAH DIGITAL Backend Server`);
+    console.log(`📍 Server running on http://localhost:${PORT}`);
+    console.log(`💽 MongoDB URI: ${process.env.MONGO_URI ? 'Defined' : 'Not Defined'}`);
+  });
+}
+
+module.exports = app;

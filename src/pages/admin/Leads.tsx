@@ -25,6 +25,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -142,14 +148,46 @@ const AdminLeads = () => {
         }
     };
 
+    const handleStatusUpdate = async (id: string, newStatus: string) => {
+        try {
+            const token = localStorage.getItem("sirah_admin_token");
+            // Find the lead to update to keep other fields if necessary, though backend probably handles partials or we send full object.
+            // Assuming simplified PUT or PATCH. Existing handleUpdate sends full object.
+            // Let's find the lead first to be safe and consistent with existing full update.
+            const leadToUpdate = leads.find(l => l._id === id);
+            if (!leadToUpdate) return;
+
+            const updatedLead = { ...leadToUpdate, status: newStatus };
+
+            const response = await fetch(`http://localhost:5000/api/leads/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedLead),
+            });
+
+            if (response.ok) {
+                const savedLead = await response.json();
+                toast.success(`Status updated to ${newStatus}`);
+                setLeads(prev => prev.map(l => l._id === savedLead._id ? savedLead : l));
+            } else {
+                toast.error("Failed to update status");
+            }
+        } catch (error) {
+            toast.error("Error updating status");
+        }
+    };
+
     const getStatusBadge = (status: string) => {
         switch (status) {
-            case 'new': return <Badge className="bg-primary/10 text-primary border-primary/20">New</Badge>;
-            case 'contacted': return <Badge className="bg-amber-400/10 text-amber-400 border-amber-400/20">Contacted</Badge>;
-            case 'qualified': return <Badge className="bg-purple-400/10 text-purple-400 border-purple-400/20">Qualified</Badge>;
-            case 'converted': return <Badge className="bg-green-400/10 text-green-400 border-green-400/20">Converted</Badge>;
-            case 'not qualified': return <Badge className="bg-red-400/10 text-red-400 border-red-400/20">Not Qualified</Badge>;
-            default: return <Badge variant="secondary" className="bg-white/5 text-slate-400">{status}</Badge>;
+            case 'new': return <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 cursor-pointer">New</Badge>;
+            case 'contacted': return <Badge className="bg-amber-400/10 text-amber-400 border-amber-400/20 hover:bg-amber-400/20 cursor-pointer">Contacted</Badge>;
+            case 'qualified': return <Badge className="bg-purple-400/10 text-purple-400 border-purple-400/20 hover:bg-purple-400/20 cursor-pointer">Qualified</Badge>;
+            case 'converted': return <Badge className="bg-green-400/10 text-green-400 border-green-400/20 hover:bg-green-400/20 cursor-pointer">Converted</Badge>;
+            case 'not qualified': return <Badge className="bg-red-400/10 text-red-400 border-red-400/20 hover:bg-red-400/20 cursor-pointer">Not Qualified</Badge>;
+            default: return <Badge variant="secondary" className="bg-white/5 text-slate-400 hover:bg-white/10 cursor-pointer">{status}</Badge>;
         }
     };
 
@@ -224,7 +262,21 @@ const AdminLeads = () => {
                                                     </div>
                                                 </TableCell>
                                                 <TableCell className="text-slate-400">{lead.company || "-"}</TableCell>
-                                                <TableCell>{getStatusBadge(lead.status)}</TableCell>
+                                                <TableCell>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger className="outline-none">
+                                                            {getStatusBadge(lead.status)}
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent className="bg-slate-900 border-white/10 text-white">
+                                                            <DropdownMenuItem onClick={() => handleStatusUpdate(lead._id, 'new')}>New</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleStatusUpdate(lead._id, 'contacted')}>Contacted</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleStatusUpdate(lead._id, 'qualified')}>Qualified</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleStatusUpdate(lead._id, 'not qualified')}>Not Qualified</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleStatusUpdate(lead._id, 'converted')}>Converted</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleStatusUpdate(lead._id, 'closed')}>Closed</DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
                                                 <TableCell className="text-slate-500 text-sm">
                                                     {format(new Date(lead.createdAt), "MMM d, h:mm a")}
                                                 </TableCell>
@@ -322,25 +374,7 @@ const AdminLeads = () => {
                                     className="bg-white/5 border-white/10 text-white"
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="status" className="text-slate-300">Status</Label>
-                                <Select
-                                    value={editingLead.status}
-                                    onValueChange={(value: any) => setEditingLead({ ...editingLead, status: value })}
-                                >
-                                    <SelectTrigger className="bg-white/5 border-white/10 text-white">
-                                        <SelectValue placeholder="Select status" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-slate-800 border-white/10 text-white">
-                                        <SelectItem value="new">New</SelectItem>
-                                        <SelectItem value="contacted">Contacted</SelectItem>
-                                        <SelectItem value="qualified">Qualified</SelectItem>
-                                        <SelectItem value="not qualified">Not Qualified</SelectItem>
-                                        <SelectItem value="converted">Converted</SelectItem>
-                                        <SelectItem value="closed">Closed</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
+
                             <div className="space-y-2 col-span-2">
                                 <Label htmlFor="notes" className="text-slate-300">Notes</Label>
                                 <Textarea

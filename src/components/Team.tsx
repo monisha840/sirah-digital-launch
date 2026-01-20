@@ -7,7 +7,7 @@ import eshwanthImg from "@/assets/eshwanth.jpg";
 import mohammadRiyazImg from "@/assets/mohammad-riyaz.jpg";
 
 const founder = {
-    name: "MOHAMMAD RIYAZ",
+    name: "MOHAMED RIYAZ",
     designation: "Founder – SIRAH DIGITAL",
     description: "Visionary leader driving AI-powered digital growth and automation-focused business solutions at SIRAH DIGITAL.",
     image: mohammadRiyazImg,
@@ -16,13 +16,13 @@ const founder = {
 const teamMembers = [
     {
         name: "M. JESHEEBA FATHIMA",
-        designation: "Digital Growth Consultant",
+        designation: "Digital Growth Specialist",
         description: "Driving strategic digital transformation and growth initiatives for businesses.",
         image: jesheebaFathimaImg,
     },
     {
         name: "SS. MONISHA",
-        designation: "Digital Growth Consultant",
+        designation: "Digital Growth Specialist",
         description: "Specializing in data-driven growth strategies and digital marketing solutions.",
         image: monishaImg,
     },
@@ -34,7 +34,7 @@ const teamMembers = [
     },
     {
         name: "ABDUL SAMAD",
-        designation: "AI Automation Engineer",
+        designation: "AI Solution Engineer",
         description: "Developing intelligent automation systems and AI-powered solutions.",
         image: abdulSamadImg,
     },

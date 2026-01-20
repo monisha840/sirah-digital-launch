@@ -9,6 +9,7 @@ import IndustriesPage from "./pages/Industries";
 import WhyUsPage from "./pages/WhyUs";
 import ProcessPage from "./pages/Process";
 import TeamPage from "./pages/TeamPage";
+import OurSolutionsPage from "./pages/OurSolutions";
 import ContactPage from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -35,6 +36,8 @@ const App = () => (
           <Route path="/why-us" element={<WhyUsPage />} />
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/team" element={<TeamPage />} />
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/our-solutions" element={<OurSolutionsPage />} />
           <Route path="/contact" element={<ContactPage />} />
 
           {/* Admin Routes */}

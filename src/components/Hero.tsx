@@ -68,6 +68,17 @@ export const Hero = () => {
                 className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-[140px] glow-soft"
             />
 
+            {/* Mobile Robot Background - Low opacity on mobile */}
+            <div
+                className="absolute inset-0 lg:hidden z-0 opacity-10 pointer-events-none mix-blend-screen"
+                style={{
+                    backgroundImage: `url(${aiHeroVisual})`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'contain'
+                }}
+            />
+
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-7xl mx-auto">
                     {/* Two-Column Layout: Text Left, Image Right */}
@@ -91,7 +102,7 @@ export const Hero = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7, delay: 0.1, type: "spring", stiffness: 100 }}
-                                className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+                                className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
                             >
                                 Automate Your Business with AI
                             </motion.h1>
@@ -196,19 +207,7 @@ export const Hero = () => {
                             </motion.div>
                         </motion.div>
 
-                        {/* Mobile Image - Below content */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.6 }}
-                            className="lg:hidden flex items-center justify-center mt-8"
-                        >
-                            <img
-                                src={aiHeroVisual}
-                                alt="AI Intelligence Visualization"
-                                className="relative w-full max-w-sm h-auto object-contain mx-auto opacity-90"
-                            />
-                        </motion.div>
+
 
                     </div>
 

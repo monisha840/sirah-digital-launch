@@ -4,7 +4,6 @@ import {
   Bot,
   MessageSquare,
   Workflow,
-  Target,
   Calendar,
   Smartphone,
   Puzzle,
@@ -31,12 +30,7 @@ const services = [
     description: "Turn your CRM into a powerful sales machine. Automatically follow up with leads, track deals, and close more sales.",
     features: ["Lead Scoring", "Pipeline Automation", "Follow-up Sequences", "Deal Tracking"],
   },
-  {
-    icon: Target,
-    title: "Marketing Automation",
-    description: "Send the right message to the right person at the right time. AI-powered campaigns that boost engagement and sales.",
-    features: ["Email Campaigns", "Social Media Automation", "A/B Testing", "Smart Personalization"],
-  },
+
   {
     icon: Calendar,
     title: "Appointment & Lead Management",

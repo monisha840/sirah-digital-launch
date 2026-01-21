@@ -50,10 +50,16 @@ app.use((err, req, res, next) => {
 
 // Start server if running directly
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`\n🚀 SIRAH DIGITAL Backend Server`);
-    console.log(`📍 Server running on http://localhost:${PORT}`);
-    console.log(`💽 MongoDB URI: ${process.env.MONGO_URI ? 'Defined' : 'Not Defined'}`);
+  const PORT = process.env.PORT || 10000;
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log("🚀 SIRAH DIGITAL Backend Server");
+    console.log(`📡 Server running on port ${PORT}`);
+    console.log(
+      `🗄️ MongoDB URI: ${
+        process.env.MONGO_URI ? "Defined" : "Not Defined"
+      }`
+    );
   });
 }
 

@@ -29,7 +29,7 @@ export const Contact = () => {
     try {
       // Send to Node.js backend
       // Using relative path via Vite Proxy (resolves Mixed Content issues)
-      const response = await fetch("/api/leads", {
+      const response = await fetch("https://sirah-digital-launch.onrender.com/api/leads", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

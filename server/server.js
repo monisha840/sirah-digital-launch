@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*', // Allow all for ngrok or specific frontend
+  origin: process.env.CORS_ORIGIN || '*',
   credentials: true
 }));
 app.use(express.json());
@@ -22,21 +22,14 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/leads', require('./routes/leadRoutes'));
 app.use('/api/content', require('./routes/contentRoutes'));
 
-// Legacy endpoint support (optional, redirects to new structure if needed)
-// app.post('/api/contact', require('./controllers/leadController').createLead);
-
 // Health Check
 app.get('/api/health', (req, res) => {
-  console.log('--- Health Check Hit [' + new Date().toISOString() + '] ---');
   res.json({ status: 'ok', message: 'Backend is running' });
 });
 
 // 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found'
-  });
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 // Error Handling Middleware
@@ -48,18 +41,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server if running directly
+// Start server
 if (require.main === module) {
-  const PORT = process.env.PORT || 10000;
-
   app.listen(PORT, "0.0.0.0", () => {
-    console.log("🚀 SIRAH DIGITAL Backend Server");
-    console.log(`📡 Server running on port ${PORT}`);
-    console.log(
-      `🗄️ MongoDB URI: ${
-        process.env.MONGO_URI ? "Defined" : "Not Defined"
-      }`
-    );
+    console.log(`🚀 Server running on port ${PORT}`);
   });
 }
 

@@ -1,0 +1,15 @@
+--- Deep LeadRoutes Test ---
+Testing leadController...
+ctrl exists: true
+createLead: function
+getLeads: function
+updateLead: function
+deleteLead: function
+Testing authMiddleware...
+mid exists: true
+protect: function
+admin: function
+Testing leadRoutes...
+routes exists: true
+routes type: function
+--- All deep tests passed ---

@@ -1,0 +1,5 @@
+--- Route Import Test ---
+authRoutes: function (isRouter: true)
+leadRoutes: function (isRouter: true)
+contentRoutes: function (isRouter: true)
+--- All tests passed ---

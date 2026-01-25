@@ -50,7 +50,14 @@ export const Contact = () => {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      let result;
+      const responseText = await response.text();
+      try {
+        result = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse error response as JSON:", responseText);
+        throw new Error(`Server returned non-JSON response (${response.status})`);
+      }
 
       if (response.ok && result.success) {
         toast.success(
@@ -61,11 +68,12 @@ export const Contact = () => {
       } else {
         toast.error(result.message || "Something went wrong. Please try again.");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error submitting form:", error);
-      toast.error(
-        "Failed to send message. Please try again or email us at support@sirahdigital.in"
-      );
+      const errorMessage = error.message.includes("Server returned")
+        ? error.message
+        : "Failed to send message. Please try again or email us at support@sirahdigital.in";
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

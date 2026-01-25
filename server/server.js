@@ -4,7 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 // Connect to Database
-connectDB();
+// connectDB() is now called inside controller/routes for serverless consistency
 
 const app = express();
 const PORT = process.env.PORT || 5000;

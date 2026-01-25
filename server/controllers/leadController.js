@@ -1,11 +1,15 @@
 const Lead = require('../models/Lead');
 const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
+const connectDB = require('../config/db');
 
 // @desc    Create a new lead (submit contact form)
 // @route   POST /api/leads
 // @access  Public
 const createLead = async (req, res) => {
+    // Ensure DB is connected for serverless environments
+    await connectDB();
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });

@@ -1,10 +1,8 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
-
-// Connect to Database
-// connectDB() is now called inside controller/routes for serverless consistency
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import connectDB from './config/db.js';
+import leadRoutes from './routes/leadRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,13 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/leads', require('./routes/leadRoutes'));
-app.use('/api/content', require('./routes/contentRoutes'));
+app.use('/api/leads', leadRoutes);
 
 // Health Checks
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend is running' });
+  res.json({ status: 'ok', message: 'Backend is running (ESM)' });
 });
 
 app.get('/api/health-db', async (req, res) => {
@@ -50,11 +46,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-if (require.main === module) {
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-  });
-}
-
-module.exports = app;
+export default app;

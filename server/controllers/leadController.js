@@ -1,14 +1,18 @@
-const Lead = require('../models/Lead');
-const nodemailer = require('nodemailer');
-const { validationResult } = require('express-validator');
-const connectDB = require('../config/db');
+import Lead from '../models/Lead.js';
+import nodemailer from 'nodemailer';
+import { validationResult } from 'express-validator';
+import connectDB from '../config/db.js';
 
 // @desc    Create a new lead (submit contact form)
 // @route   POST /api/leads
 // @access  Public
-const createLead = async (req, res) => {
+export const createLead = async (req, res) => {
     // Ensure DB is connected for serverless environments
-    await connectDB();
+    try {
+        await connectDB();
+    } catch (err) {
+        return res.status(500).json({ success: false, message: `Database connection failed: ${err.message}` });
+    }
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -107,8 +111,9 @@ const createLead = async (req, res) => {
 // @desc    Get all leads
 // @route   GET /api/leads
 // @access  Private/Admin
-const getLeads = async (req, res) => {
+export const getLeads = async (req, res) => {
     try {
+        await connectDB();
         const leads = await Lead.find().sort({ createdAt: -1 });
         res.json(leads);
     } catch (error) {
@@ -119,8 +124,9 @@ const getLeads = async (req, res) => {
 // @desc    Update lead
 // @route   PUT /api/leads/:id
 // @access  Private/Admin
-const updateLead = async (req, res) => {
+export const updateLead = async (req, res) => {
     try {
+        await connectDB();
         const lead = await Lead.findById(req.params.id);
 
         if (!lead) {
@@ -138,8 +144,9 @@ const updateLead = async (req, res) => {
 // @desc    Delete lead
 // @route   DELETE /api/leads/:id
 // @access  Private/Admin
-const deleteLead = async (req, res) => {
+export const deleteLead = async (req, res) => {
     try {
+        await connectDB();
         const lead = await Lead.findById(req.params.id);
 
         if (!lead) {
@@ -151,11 +158,4 @@ const deleteLead = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Server Error' });
     }
-};
-
-module.exports = {
-    createLead,
-    getLeads,
-    updateLead,
-    deleteLead,
 };

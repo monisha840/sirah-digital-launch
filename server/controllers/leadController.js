@@ -92,7 +92,10 @@ const createLead = async (req, res) => {
     } catch (error) {
         console.error('❌ Server Error during Lead Creation:', error);
         if (!res.headersSent) {
-            res.status(500).json({ message: 'Server Error' });
+            res.status(500).json({
+                success: false,
+                message: `Server Error: ${error.message}`
+            });
         }
     }
 };

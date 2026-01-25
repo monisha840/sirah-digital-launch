@@ -21,18 +21,12 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // ✅ Backend URL from environment variable
-  const API_URL = import.meta.env.VITE_BACKEND_URL;
+  // Use absolute URL from env if provided, otherwise default to relative for internal Vercel/Proxy routing
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    if (!API_URL) {
-      toast.error("Backend configuration missing. Please try again later.");
-      setIsSubmitting(false);
-      return;
-    }
 
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -45,13 +39,10 @@ export const Contact = () => {
     };
 
     try {
-<<<<<<< HEAD
-      // Send to Node.js backend
-      // Using relative path via Vite Proxy (resolves Mixed Content issues)
-      const response = await fetch("/api/leads", {
-=======
-      const response = await fetch(`${API_URL}/api/leads`, {
->>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
+      // Robust URL construction: ensures either /api/leads or absolute URL/api/leads
+      const endpoint = API_URL ? `${API_URL}/api/leads` : "/api/leads";
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,8 +54,7 @@ export const Contact = () => {
 
       if (response.ok && result.success) {
         toast.success(
-          result.message ||
-            "Thank you! We'll be in touch within 4 hours."
+          result.message || "Thank you! We'll be in touch within 4 hours."
         );
         setIsSubmitted(true);
         (e.target as HTMLFormElement).reset();
@@ -220,4 +210,3 @@ export const Contact = () => {
     </section>
   );
 };
-

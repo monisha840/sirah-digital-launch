@@ -32,40 +32,6 @@ const createLead = async (req, res) => {
 
         console.log('✅ Lead Created in DB:', lead._id);
 
-<<<<<<< HEAD
-        // 2. Send Email
-        if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-            try {
-                const transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: process.env.GMAIL_USER,
-                        pass: process.env.GMAIL_APP_PASSWORD,
-                    },
-                });
-
-                const mailOptions = {
-                    from: process.env.GMAIL_USER,
-                    to: process.env.RECIPIENT_EMAIL || 'support@sirahdigital.in',
-                    subject: 'New Contact Form Submission – Sirah Digital',
-                    html: `
-                        <h3>New Lead Saved to Database</h3>
-                        <p><strong>Lead ID:</strong> ${lead._id}</p>
-                        <hr>
-                        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Phone:</strong> ${phone}</p>
-                        <p><strong>Company:</strong> ${company}</p>
-                        <p><strong>Message:</strong> ${message}</p>
-                    `,
-                };
-
-                await transporter.sendMail(mailOptions);
-                console.log('✅ Email notification sent');
-            } catch (emailError) {
-                console.error('⚠️ Email notification failed:', emailError.message);
-            }
-=======
         // 2️⃣ RESPOND TO FRONTEND IMMEDIATELY (CRITICAL FIX)
         res.status(201).json({
             success: true,
@@ -88,6 +54,8 @@ const createLead = async (req, res) => {
                 subject: 'New Contact Form Submission – Sirah Digital',
                 html: `
                     <h3>New Lead Saved</h3>
+                    <p><strong>Lead ID:</strong> ${lead._id}</p>
+                    <hr>
                     <p><strong>Name:</strong> ${firstName} ${lastName}</p>
                     <p><strong>Email:</strong> ${email}</p>
                     <p><strong>Phone:</strong> ${phone}</p>
@@ -99,7 +67,6 @@ const createLead = async (req, res) => {
             transporter.sendMail(mailOptions)
                 .then(() => console.log('✅ Email sent'))
                 .catch(err => console.error('❌ Email error:', err.message));
->>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
         }
 
         // 4️⃣ TRIGGER n8n (NON-BLOCKING)
@@ -115,37 +82,15 @@ const createLead = async (req, res) => {
                     company,
                     message,
                     leadId: lead._id,
-<<<<<<< HEAD
-                    submittedAt: lead.createdAt
-                };
-
-                const n8nResponse = await fetch(process.env.N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(n8nPayload)
-                });
-
-                if (n8nResponse.ok) {
-                    console.log('✅ n8n automation triggered');
-                } else {
-                    console.error('❌ n8n Webhook failed with status:', n8nResponse.status);
-                }
-            } catch (n8nError) {
-                console.error('❌ n8n Webhook Error:', n8nError.message);
-            }
-=======
                     submittedAt: lead.createdAt,
                 }),
             })
                 .then(() => console.log('✅ n8n triggered'))
                 .catch(err => console.error('❌ n8n error:', err.message));
->>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
         }
 
     } catch (error) {
         console.error('❌ Server Error during Lead Creation:', error);
-
-        // Safety fallback response
         if (!res.headersSent) {
             res.status(500).json({ message: 'Server Error' });
         }
@@ -171,28 +116,8 @@ const updateLead = async (req, res) => {
     try {
         const lead = await Lead.findById(req.params.id);
 
-<<<<<<< HEAD
-        if (lead) {
-            lead.firstName = req.body.firstName || lead.firstName;
-            lead.lastName = req.body.lastName || lead.lastName;
-            lead.email = req.body.email || lead.email;
-            lead.phone = req.body.phone || lead.phone;
-            lead.company = req.body.company || lead.company;
-            lead.status = req.body.status || lead.status;
-            lead.notes = req.body.notes !== undefined ? req.body.notes : lead.notes;
-
-            if (req.body.message) {
-                lead.message = req.body.message;
-            }
-
-            const updatedLead = await lead.save();
-            res.json(updatedLead);
-        } else {
-            res.status(404).json({ message: 'Lead not found' });
-=======
         if (!lead) {
             return res.status(404).json({ message: 'Lead not found' });
->>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
         }
 
         Object.assign(lead, req.body);

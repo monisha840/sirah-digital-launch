@@ -70,8 +70,9 @@ export const Contact = () => {
       }
     } catch (error: any) {
       console.error("Error submitting form:", error);
-      // Show the raw error message to identify the network/parsing issue
-      toast.error(`Error: ${error.message || "Unknown error"}. Please check Vercel Logs.`);
+      // Show the raw error message + current origin to identify the network issue
+      const origin = window.location.origin;
+      toast.error(`Error: ${error.message}. Link: ${origin}/api/leads. Please check Vercel Logs.`);
     } finally {
       setIsSubmitting(false);
     }

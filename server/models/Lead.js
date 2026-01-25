@@ -39,6 +39,7 @@ const leadSchema = mongoose.Schema(
     }
 );
 
-const Lead = mongoose.model('Lead', leadSchema);
+// Prevent re-compilation in serverless environments
+const Lead = mongoose.models.Lead || mongoose.model('Lead', leadSchema);
 
 export default Lead;

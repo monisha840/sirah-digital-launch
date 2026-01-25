@@ -13,18 +13,14 @@ const createLead = async (req, res) => {
 
     let { firstName, lastName, email, phone, company, message } = req.body;
 
-    // Format phone: Append '91' if it's a 10-digit number
+    // Format phone number
     if (phone) {
         let cleaned = phone.replace(/\D/g, '');
-        if (cleaned.length === 10) {
-            phone = '91' + cleaned;
-        } else {
-            phone = cleaned;
-        }
+        phone = cleaned.length === 10 ? '91' + cleaned : cleaned;
     }
 
     try {
-        // 1. Save to Database
+        // 1️⃣ SAVE TO DATABASE (ONLY awaited operation)
         const lead = await Lead.create({
             firstName,
             lastName,
@@ -36,6 +32,7 @@ const createLead = async (req, res) => {
 
         console.log('✅ Lead Created in DB:', lead._id);
 
+<<<<<<< HEAD
         // 2. Send Email
         if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
             try {
@@ -68,12 +65,49 @@ const createLead = async (req, res) => {
             } catch (emailError) {
                 console.error('⚠️ Email notification failed:', emailError.message);
             }
+=======
+        // 2️⃣ RESPOND TO FRONTEND IMMEDIATELY (CRITICAL FIX)
+        res.status(201).json({
+            success: true,
+            message: 'Your message has been received!',
+        });
+
+        // 3️⃣ SEND EMAIL (NON-BLOCKING)
+        if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.GMAIL_USER,
+                    pass: process.env.GMAIL_APP_PASSWORD,
+                },
+            });
+
+            const mailOptions = {
+                from: process.env.GMAIL_USER,
+                to: process.env.RECIPIENT_EMAIL || 'support@sirahdigital.in',
+                subject: 'New Contact Form Submission – Sirah Digital',
+                html: `
+                    <h3>New Lead Saved</h3>
+                    <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Phone:</strong> ${phone}</p>
+                    <p><strong>Company:</strong> ${company}</p>
+                    <p><strong>Message:</strong> ${message}</p>
+                `,
+            };
+
+            transporter.sendMail(mailOptions)
+                .then(() => console.log('✅ Email sent'))
+                .catch(err => console.error('❌ Email error:', err.message));
+>>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
         }
 
-        // 3. n8n Automation (WhatsApp)
+        // 4️⃣ TRIGGER n8n (NON-BLOCKING)
         if (process.env.N8N_WEBHOOK_URL) {
-            try {
-                const n8nPayload = {
+            fetch(process.env.N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
                     firstName,
                     lastName,
                     email,
@@ -81,6 +115,7 @@ const createLead = async (req, res) => {
                     company,
                     message,
                     leadId: lead._id,
+<<<<<<< HEAD
                     submittedAt: lead.createdAt
                 };
 
@@ -98,17 +133,22 @@ const createLead = async (req, res) => {
             } catch (n8nError) {
                 console.error('❌ n8n Webhook Error:', n8nError.message);
             }
+=======
+                    submittedAt: lead.createdAt,
+                }),
+            })
+                .then(() => console.log('✅ n8n triggered'))
+                .catch(err => console.error('❌ n8n error:', err.message));
+>>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
         }
-
-        res.status(201).json({
-            success: true,
-            data: lead,
-            message: 'Your message has been received!',
-        });
 
     } catch (error) {
         console.error('❌ Server Error during Lead Creation:', error);
-        res.status(500).json({ message: 'Server Error' });
+
+        // Safety fallback response
+        if (!res.headersSent) {
+            res.status(500).json({ message: 'Server Error' });
+        }
     }
 };
 
@@ -131,6 +171,7 @@ const updateLead = async (req, res) => {
     try {
         const lead = await Lead.findById(req.params.id);
 
+<<<<<<< HEAD
         if (lead) {
             lead.firstName = req.body.firstName || lead.firstName;
             lead.lastName = req.body.lastName || lead.lastName;
@@ -148,7 +189,15 @@ const updateLead = async (req, res) => {
             res.json(updatedLead);
         } else {
             res.status(404).json({ message: 'Lead not found' });
+=======
+        if (!lead) {
+            return res.status(404).json({ message: 'Lead not found' });
+>>>>>>> 7e4e7e51ed91452412336d07352816318eb00ca5
         }
+
+        Object.assign(lead, req.body);
+        const updatedLead = await lead.save();
+        res.json(updatedLead);
     } catch (error) {
         res.status(500).json({ message: 'Server Error' });
     }
@@ -161,14 +210,13 @@ const deleteLead = async (req, res) => {
     try {
         const lead = await Lead.findById(req.params.id);
 
-        if (lead) {
-            await lead.deleteOne();
-            res.json({ message: 'Lead removed' });
-        } else {
-            res.status(404).json({ message: 'Lead not found' });
+        if (!lead) {
+            return res.status(404).json({ message: 'Lead not found' });
         }
+
+        await lead.deleteOne();
+        res.json({ message: 'Lead removed' });
     } catch (error) {
-        console.error('Error deleting lead:', error);
         res.status(500).json({ message: 'Server Error' });
     }
 };

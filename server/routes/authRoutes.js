@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
-const {
+import { check } from 'express-validator';
+import {
     registerUser,
     loginUser,
     getMe,
-} = require('../controllers/authController');
-const { protect } = require('../middleware/authMiddleware');
+} from '../controllers/authController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 router.post(
     '/signup',
@@ -24,4 +24,4 @@ router.post(
 router.post('/login', loginUser);
 router.get('/me', protect, getMe);
 
-module.exports = router;
+export default router;

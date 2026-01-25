@@ -1,7 +1,7 @@
 // @desc    Get website content
 // @route   GET /api/content
 // @access  Public
-const getContent = async (req, res) => {
+export const getContent = async (req, res) => {
     // This is a mockup. Ideally, you would fetch this from a Content model in MongoDB.
     const content = {
         hero: {
@@ -20,5 +20,3 @@ const getContent = async (req, res) => {
 
     res.json(content);
 };
-
-module.exports = { getContent };

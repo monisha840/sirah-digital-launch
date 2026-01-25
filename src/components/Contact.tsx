@@ -70,9 +70,8 @@ export const Contact = () => {
       }
     } catch (error: any) {
       console.error("Error submitting form:", error);
-      // Show the raw error message + current origin to identify the network issue
       const origin = window.location.origin;
-      toast.error(`Error: ${error.message}. Link: ${origin}/api/leads. Please check Vercel Logs.`);
+      toast.error(`[v1.0.1] Error: ${error.message}. Link: ${origin}/api/leads`);
     } finally {
       setIsSubmitting(false);
     }

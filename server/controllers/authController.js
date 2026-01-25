@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
-const { validationResult } = require('express-validator');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+import { validationResult } from 'express-validator';
 
 // Generate JWT
 const generateToken = (id) => {
@@ -13,7 +13,7 @@ const generateToken = (id) => {
 // @desc    Register new user
 // @route   POST /api/auth/signup
 // @access  Public
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     // Check validation results
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -56,7 +56,7 @@ const registerUser = async (req, res) => {
 // @desc    Authenticate a user
 // @route   POST /api/auth/login
 // @access  Public
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -82,17 +82,11 @@ const loginUser = async (req, res) => {
 // @desc    Get user data
 // @route   GET /api/auth/me
 // @access  Private
-const getMe = async (req, res) => {
+export const getMe = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         res.json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
-
-module.exports = {
-    registerUser,
-    loginUser,
-    getMe,
 };

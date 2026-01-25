@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import leadRoutes from '../server/routes/leadRoutes.js';
+import authRoutes from '../server/routes/authRoutes.js';
+import contentRoutes from '../server/routes/contentRoutes.js';
 import connectDB from '../server/config/db.js';
 
 const app = express();
@@ -16,13 +18,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-// Using both /api/leads and /leads to be safe with Vercel routing
 app.use('/api/leads', leadRoutes);
-app.use('/leads', leadRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/content', contentRoutes);
 
 // Health Checks
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Backend is running (Vercel ESM)' });
+    res.json({
+        status: 'ok',
+        message: 'Backend is running (Full ESM)',
+        version: '1.0.1'
+    });
 });
 
 app.get('/api/health-db', async (req, res) => {

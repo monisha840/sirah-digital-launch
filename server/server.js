@@ -22,9 +22,18 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/leads', require('./routes/leadRoutes'));
 app.use('/api/content', require('./routes/contentRoutes'));
 
-// Health Check
+// Health Checks
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend is running' });
+});
+
+app.get('/api/health-db', async (req, res) => {
+  try {
+    await connectDB();
+    res.json({ status: 'ok', database: 'connected' });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message });
+  }
 });
 
 // 404 handler

@@ -70,10 +70,8 @@ export const Contact = () => {
       }
     } catch (error: any) {
       console.error("Error submitting form:", error);
-      const errorMessage = error.message.includes("Server returned")
-        ? error.message
-        : "Failed to send message. Please try again or email us at support@sirahdigital.in";
-      toast.error(errorMessage);
+      // Show the raw error message to identify the network/parsing issue
+      toast.error(`Error: ${error.message || "Unknown error"}. Please check Vercel Logs.`);
     } finally {
       setIsSubmitting(false);
     }

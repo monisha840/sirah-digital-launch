@@ -9,20 +9,27 @@ const connectDB = async () => {
     }
 
     try {
-        if (!process.env.MONGO_URI) {
-            console.warn('⚠️ No MONGO_URI found');
-            return;
+        const uri = process.env.MONGO_URI;
+        if (!uri) {
+            console.error('❌ FATAL: MONGO_URI is missing from process.env');
+            throw new Error('Database configuration missing (MONGO_URI)');
         }
 
-        console.log('=> Connecting to database...');
-        const conn = await mongoose.connect(process.env.MONGO_URI, {
+        // Diagnostic log: masked URI to verify it's loaded correctly
+        const maskedUri = uri.substring(0, 10) + '...' + uri.substring(uri.length - 5);
+        console.log(`=> Attempting to connect to MongoDB (URI: ${maskedUri})`);
+
+        // Force a 5s timeout to prevent Vercel from killing the function before we log
+        const conn = await mongoose.connect(uri, {
             serverSelectionTimeoutMS: 5000,
+            connectTimeoutMS: 5000,
+            socketTimeoutMS: 30000,
         });
 
         isConnected = true;
-        console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+        console.log(`✅ MongoDB Connected successfully: ${conn.connection.host}`);
     } catch (error) {
-        console.error(`❌ MongoDB Connection Error: ${error.message}`);
+        console.error(`❌ DB_CONNECTION_FAILED: ${error.message}`);
         isConnected = false;
         throw error;
     }

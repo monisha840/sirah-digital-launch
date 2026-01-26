@@ -71,7 +71,7 @@ export const Contact = () => {
     } catch (error: any) {
       console.error("Error submitting form:", error);
       const origin = window.location.origin;
-      toast.error(`[v1.0.1] Error: ${error.message}. Link: ${origin}/api/leads`);
+      toast.error(`[v1.0.3] Error: ${error.message}. Link: ${origin}/api/leads`);
     } finally {
       setIsSubmitting(false);
     }

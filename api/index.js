@@ -8,50 +8,58 @@ import connectDB from '../server/config/db.js';
 
 const app = express();
 
-// Middleware
 app.use(cors());
+app.use(express.json());
+
+// Logger
 app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log(`[v1.0.3] ${req.method} ${req.url}`);
     next();
 });
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// ABSOLUTE TOP PRIORITY DIAGNOSTICS
+app.get('/api/ping', (req, res) => {
+    res.json({ pong: true, version: '1.0.3', url: req.url });
+});
+
+app.get('/api/test', (req, res) => {
+    res.json({ success: true, message: 'Wildcard diagnostic', url: req.url, path: req.path });
+});
 
 // Routes
 app.use('/api/leads', leadRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 
-// Health Checks
+// Health Check
 app.get('/api/health', (req, res) => {
-    res.json({
-        status: 'ok',
-        message: 'Backend is running (Full ESM)',
-        version: '1.0.1'
-    });
+    res.json({ status: 'ok', version: '1.0.3' });
 });
 
 app.get('/api/health-db', async (req, res) => {
+    console.log('=> Health-DB check triggered');
     try {
-        await connectDB();
+        const connPromise = connectDB();
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Database connection timeout (8s limit)')), 8000)
+        );
+
+        await Promise.race([connPromise, timeoutPromise]);
         res.json({ status: 'ok', database: 'connected' });
     } catch (err) {
-        res.status(500).json({ status: 'error', message: err.message });
+        console.error('=> Health-DB failed:', err.message);
+        res.status(503).json({ status: 'error', message: err.message });
     }
 });
 
-// 404 handler
+// Catch-all Debugger
 app.use((req, res) => {
-    console.log(`404: Not Found - ${req.url}`);
-    res.status(404).json({ success: false, message: `Route not found: ${req.url}` });
-});
-
-// Error Handling Middleware
-app.use((err, req, res, next) => {
-    console.error('SERVER_ERROR:', err.stack);
-    res.status(500).json({
+    console.log(`[v1.0.3] 404: ${req.method} ${req.url}`);
+    res.status(404).json({
         success: false,
-        message: err.message || 'Internal Server Error'
+        message: `Route not found: ${req.url}`,
+        tip: "Try /api/ping to test connection",
+        version: "1.0.3"
     });
 });
 

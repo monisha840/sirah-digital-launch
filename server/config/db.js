@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-// Global variable to cache the connection
-let cached = global.mongoose;
+// Use globalThis for better cross-environment compatibility in ESM
+let cached = globalThis.mongoose;
 
 if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
+    cached = globalThis.mongoose = { conn: null, promise: null };
 }
 
 async function connectDB() {
@@ -20,8 +20,9 @@ async function connectDB() {
 
     if (!cached.promise) {
         const opts = {
-            serverSelectionTimeoutMS: 8000, // Hard limit for serverless
+            serverSelectionTimeoutMS: 5000, // Timeout faster for serverless
             heartbeatFrequencyMS: 1000,
+            socketTimeoutMS: 30000,
         };
 
         console.log('=> Creating new database connection...');

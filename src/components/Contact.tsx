@@ -70,8 +70,8 @@ export const Contact = () => {
       }
     } catch (error: any) {
       console.error("Error submitting form:", error);
-      // Backend URL will be provided by Render or defaults to the expected one
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://sirah-digital.onrender.com";
+      // Backend is now live on Render!
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://sirah-digital-backend.onrender.com";
       toast.error(`[RENDER] Error: ${error.message}. Target: ${backendUrl}/api/leads`);
     } finally {
       setIsSubmitting(false);

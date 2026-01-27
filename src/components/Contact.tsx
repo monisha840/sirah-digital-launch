@@ -21,8 +21,9 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Use absolute URL from env if provided, otherwise default to our new stable Render backend
-  const API_URL = import.meta.env.VITE_BACKEND_URL || "https://sirah-digital-backend.onrender.com";
+  // FORCED to Render backend to bypass Vercel serverless issues
+  const API_URL = "https://sirah-digital-backend.onrender.com";
+  console.log("🚀 SIRAH: Using Backend URL ->", API_URL);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

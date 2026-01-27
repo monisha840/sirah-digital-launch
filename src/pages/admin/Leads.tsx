@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { API_URL } from "@/lib/api";
 
 interface Lead {
     _id: string;
@@ -77,7 +78,7 @@ const AdminLeads = () => {
     const fetchLeads = async () => {
         try {
             const token = localStorage.getItem("sirah_admin_token");
-            const response = await fetch("http://localhost:5000/api/leads", {
+            const response = await fetch(`${API_URL}/api/leads`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -101,7 +102,7 @@ const AdminLeads = () => {
         if (!deleteId) return;
         try {
             const token = localStorage.getItem("sirah_admin_token");
-            const response = await fetch(`http://localhost:5000/api/leads/${deleteId}`, {
+            const response = await fetch(`${API_URL}/api/leads/${deleteId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -126,7 +127,7 @@ const AdminLeads = () => {
 
         try {
             const token = localStorage.getItem("sirah_admin_token");
-            const response = await fetch(`http://localhost:5000/api/leads/${editingLead._id}`, {
+            const response = await fetch(`${API_URL}/api/leads/${editingLead._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -159,7 +160,7 @@ const AdminLeads = () => {
 
             const updatedLead = { ...leadToUpdate, status: newStatus };
 
-            const response = await fetch(`http://localhost:5000/api/leads/${id}`, {
+            const response = await fetch(`${API_URL}/api/leads/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

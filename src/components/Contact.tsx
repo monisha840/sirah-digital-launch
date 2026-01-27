@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { API_URL } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,8 +22,6 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // FORCED to Render backend to bypass Vercel serverless issues
-  const API_URL = "https://sirah-digital-backend.onrender.com";
   console.log("🚀 SIRAH: Using Backend URL ->", API_URL);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,9 +70,7 @@ export const Contact = () => {
       }
     } catch (error: any) {
       console.error("Error submitting form:", error);
-      // Backend is now live on Render!
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://sirah-digital-backend.onrender.com";
-      toast.error(`[RENDER] Error: ${error.message}. Target: ${backendUrl}/api/leads`);
+      toast.error(`[RENDER] Error: ${error.message}. Target: ${API_URL}/api/leads`);
     } finally {
       setIsSubmitting(false);
     }

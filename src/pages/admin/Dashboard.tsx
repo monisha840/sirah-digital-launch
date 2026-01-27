@@ -3,6 +3,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, Users, TrendingUp, Clock } from "lucide-react";
 import { toast } from "sonner";
+import { API_URL } from "@/lib/api";
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState({
@@ -17,7 +18,7 @@ const AdminDashboard = () => {
         const fetchStats = async () => {
             try {
                 const token = localStorage.getItem("sirah_admin_token");
-                const response = await fetch("http://localhost:5000/api/leads", {
+                const response = await fetch(`${API_URL}/api/leads`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

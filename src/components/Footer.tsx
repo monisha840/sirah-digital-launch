@@ -1,24 +1,25 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Facebook, MessageCircle, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpeg";
 
 const footerLinks = {
   company: [
-    { name: "About Us", href: "#about" },
-    { name: "Our Process", href: "#process" },
-    { name: "Testimonials", href: "#testimonials" },
-    { name: "Contact", href: "#contact" },
+    { name: "About Us", href: "/why-us" },
+    { name: "Our Process", href: "/process" },
+    { name: "Testimonials", href: "/#testimonials" },
+    { name: "Contact", href: "/contact" },
   ],
   services: [
-    { name: "AI Business Automation", href: "#services" },
-    { name: "Chatbot Development", href: "#services" },
-    { name: "CRM Automation", href: "#services" },
-    { name: "Marketing Automation", href: "#services" },
+    { name: "AI Business Automation", href: "/services" },
+    { name: "Chatbot Development", href: "/services" },
+    { name: "CRM Automation", href: "/services" },
+    { name: "Marketing Automation", href: "/services" },
   ],
   resources: [
-    { name: "FAQ", href: "#" },
-    { name: "Support", href: "#contact" },
+    { name: "FAQ", href: "/#faq" },
+    { name: "Support", href: "/contact" },
   ],
 };
 
@@ -37,10 +38,10 @@ export const Footer = () => {
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12 mb-12">
           {/* Brand */}
-          <div className="col-span-2 lg:col-span-2">
-            <a href="#home" className="flex items-center gap-3 mb-4 group">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
+            <Link to="/" className="flex items-center gap-3 mb-4 group">
               <motion.img
                 src={logo}
                 alt="SIRAH DIGITAL"
@@ -50,7 +51,7 @@ export const Footer = () => {
               <span className="font-display font-bold text-xl text-foreground">
                 SIRAH <span className="gradient-text">DIGITAL</span>
               </span>
-            </a>
+            </Link>
             <p className="text-muted-foreground text-sm mb-6 max-w-sm">
               Transforming businesses with intelligent AI automation solutions.
               We help you work smarter, scale faster, and grow without limits.
@@ -82,11 +83,11 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300 hover:translate-x-1 inline-block">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -98,11 +99,11 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300 hover:translate-x-1 inline-block">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -127,7 +128,7 @@ export const Footer = () => {
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                 <span className="text-muted-foreground text-sm">
-                  8th Floor, Innovate, Featherlite – The Address, 200 Feet Radial Rd, Zamin Pallavaram, Chennai, Tamil Nadu – 600044
+                  8th Floor, Innovate, Featherlite – The Address, Pallavaram, Chennai – 600044
                 </span>
               </li>
             </ul>
@@ -139,12 +140,12 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200 inline-flex items-center gap-1"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

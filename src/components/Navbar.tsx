@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
@@ -27,11 +28,14 @@ const navLinks = [
   { name: "Contact", path: "/contact" },
 ];
 
+import { useMediaQuery } from "@/hooks/use-media-query";
+
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<string | null>(null);
   const location = useLocation();
+  const isTablet = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,91 +131,127 @@ export const Navbar = () => {
         </button>
       </div>
 
-      {/* Enhanced Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden glass-premium border-t border-border/30 fixed inset-x-0 top-[72px] bottom-0 z-40 overflow-y-auto"
-          >
-            <nav className="container mx-auto px-4 py-6 flex flex-col gap-2 pb-24">
-              {navLinks.map((link, index) => {
-                if (link.children) {
-                  const isOpen = mobileSubmenuOpen === link.name;
-                  return (
-                    <div key={link.name} className="flex flex-col">
-                      <button
-                        onClick={() => toggleMobileSubmenu(link.name)}
-                        className="flex items-center justify-between text-foreground/90 hover:text-foreground transition-all duration-300 text-lg font-semibold py-3 px-4 hover:bg-primary/10 rounded-lg w-full text-left"
-                      >
-                        <motion.span
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          {link.name}
-                        </motion.span>
-                        <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`} />
-                      </button>
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="overflow-hidden pl-4"
-                          >
-                            <div className="flex flex-col gap-1 py-1 border-l-2 border-white/10 ml-4 pl-4">
-                              {link.children.map((child, childIndex) => (
-                                <Link
-                                  key={child.name}
-                                  to={child.path}
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                  className={`text-foreground/80 hover:text-white transition-colors py-3 text-base ${location.pathname === child.path ? "text-primary" : ""}`}
-                                >
-                                  {child.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                }
+      {/* Mobile Menu Backdrop & Drawer */}
+      {createPortal(
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden"
+              />
 
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.path!}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`text-foreground/90 hover:text-foreground transition-all duration-300 text-lg font-semibold py-3 px-4 hover:bg-primary/10 rounded-lg ${location.pathname === link.path ? "text-primary bg-primary/10" : ""
-                        }`}
+              {/* Drawer / Tablet Modal */}
+              <motion.div
+                initial={isTablet ? { opacity: 0, scale: 0.95, x: "-50%", y: "-50%" } : { x: "100%" }}
+                animate={isTablet ? { opacity: 1, scale: 1, x: "-50%", y: "-50%" } : { x: 0 }}
+                exit={isTablet ? { opacity: 0, scale: 0.95, x: "-50%", y: "-50%" } : { x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className={`fixed z-[101] overflow-y-auto lg:hidden glass-premium border-border/30 
+                  ${isTablet
+                    ? "top-1/2 left-1/2 w-full max-w-md h-auto max-h-[85vh] rounded-2xl border shadow-2xl"
+                    : "top-0 right-0 bottom-0 w-[80%] max-w-sm border-l"
+                  }`}
+              >
+                <div className="flex flex-col h-full">
+                  {/* Drawer Header */}
+                  <div className="flex items-center justify-between p-6 border-b border-white/10">
+                    <span className="font-display font-bold text-xl text-foreground">
+                      Menu
+                    </span>
+                    <button
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="p-2 rounded-full hover:bg-white/10 transition-colors"
                     >
-                      {link.name}
-                    </motion.div>
-                  </Link>
-                );
-              })}
-              <div className="mt-8 px-4">
-                <Button variant="hero" size="lg" className="w-full glow-primary py-6 text-lg" asChild>
-                  <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
-                    Book Free Consultation
-                  </a>
-                </Button>
-              </div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                      <X className="w-6 h-6 text-foreground" />
+                    </button>
+                  </div>
+
+                  {/* Drawer Content */}
+                  <nav className="flex-1 px-6 py-8 flex flex-col gap-2">
+                    {navLinks.map((link, index) => {
+                      if (link.children) {
+                        const isOpen = mobileSubmenuOpen === link.name;
+                        return (
+                          <div key={link.name} className="flex flex-col">
+                            <button
+                              onClick={() => toggleMobileSubmenu(link.name)}
+                              className="flex items-center justify-between text-foreground/90 hover:text-foreground transition-all duration-300 text-lg font-semibold py-3 px-4 hover:bg-primary/10 rounded-lg w-full text-left"
+                            >
+                              <motion.span
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                              >
+                                {link.name}
+                              </motion.span>
+                              <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`} />
+                            </button>
+                            <AnimatePresence>
+                              {isOpen && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="overflow-hidden pl-4"
+                                >
+                                  <div className="flex flex-col gap-1 py-1 border-l-2 border-white/10 ml-4 pl-4">
+                                    {link.children.map((child) => (
+                                      <Link
+                                        key={child.name}
+                                        to={child.path}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className={`text-foreground/80 hover:text-white transition-colors py-3 text-base ${location.pathname === child.path ? "text-primary" : ""}`}
+                                      >
+                                        {child.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <Link
+                          key={link.name}
+                          to={link.path!}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className={`text-foreground/90 hover:text-foreground transition-all duration-300 text-lg font-semibold py-3 px-4 hover:bg-primary/10 rounded-lg ${location.pathname === link.path ? "text-primary bg-primary/10" : ""
+                              }`}
+                          >
+                            {link.name}
+                          </motion.div>
+                        </Link>
+                      );
+                    })}
+
+                    <div className="mt-8">
+                      <Button variant="hero" size="lg" className="w-full glow-primary py-6 text-lg" asChild>
+                        <a href="https://tidycal.com/1r8o7ez/sirah-digital" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+                          Book Free Consultation
+                        </a>
+                      </Button>
+                    </div>
+                  </nav>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </motion.header>
   );
 };

@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { Search, Lightbulb, Code, Rocket, LineChart } from "lucide-react";
 
@@ -38,6 +38,10 @@ const steps = [
 export const Process = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
 
   return (
     <section id="process" className="py-24 relative overflow-hidden">
@@ -108,8 +112,14 @@ export const Process = () => {
 
         {/* Process Steps */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Connection Line */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-accent/50 to-primary/50 -translate-x-1/2" />
+          {/* Base Connection Line */}
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-primary/10 to-transparent -translate-x-1/2" />
+
+          {/* Glowing Progress Line */}
+          <motion.div
+            style={{ scaleY: scrollYProgress }}
+            className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary via-accent to-primary -translate-x-1/2 origin-top shadow-[0_0_20px_2px_hsl(var(--primary)/0.5)]"
+          />
 
           {steps.map((step, index) => (
             <motion.div
@@ -122,7 +132,11 @@ export const Process = () => {
             >
               {/* Content Card */}
               <div className={`flex-1 ${index % 2 === 0 ? "lg:text-right" : "lg:text-left"}`}>
-                <div className="inline-block p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/40 transition-all duration-500 group hover-lift">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="inline-block p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/40 group hover-lift cursor-pointer"
+                >
                   <div className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? "lg:flex-row-reverse" : ""}`}>
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center group-hover:from-primary/25 group-hover:to-accent/20 transition-all group-hover:scale-110">
                       <step.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
@@ -135,7 +149,7 @@ export const Process = () => {
                   <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
                     {step.description}
                   </p>
-                </div>
+                </motion.div>
               </div>
 
               {/* Enhanced Center Dot */}

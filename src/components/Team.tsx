@@ -22,8 +22,8 @@ const teamMembers = [
     },
     {
         name: "SS. MONISHA",
-        designation: "Digital Growth Specialist",
-        description: "Specializing in data-driven growth strategies and digital marketing solutions.",
+        designation: "AI Automation Engineer",
+        description: "Building intelligent AI-driven automation & Delivering AI-enabled automation systems",
         image: monishaImg,
     },
     {

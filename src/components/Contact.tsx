@@ -144,7 +144,7 @@ export const Contact = () => {
               <div className="flex gap-4">
                 <MapPin className="text-primary" />
                 <span>
-                  Chennai, Tamil Nadu – 600044
+                  8th Floor, Innovate, Featherlite – The Address, Pallavaram, Chennai – 600044
                 </span>
               </div>
             </div>

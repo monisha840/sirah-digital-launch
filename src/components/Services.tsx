@@ -93,13 +93,13 @@ export const Services = () => {
                 type: "spring",
                 stiffness: 100
               }}
-              className="group relative p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/50 transition-all duration-500 hover-lift overflow-hidden"
+              className="group relative p-6 rounded-2xl bg-card/60 border border-border/50 hover:border-primary/50 transition-all duration-500 hover-lift overflow-hidden h-full flex flex-col"
             >
               {/* Gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
               {/* Content */}
-              <div className="relative z-10">
+              <div className="relative z-10 flex flex-col items-center text-center md:items-start md:text-left flex-1 h-full">
                 <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-500 group-hover:rotate-3">
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-accent opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
                   <service.icon className="w-7 h-7 text-primary relative z-10" />
@@ -108,25 +108,27 @@ export const Services = () => {
                 <h3 className="font-display text-xl font-semibold mb-3 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
                 <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{service.description}</p>
 
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-6 w-full flex-1">
                   {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground group/item">
+                    <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground group/item justify-center md:justify-start">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary group-hover/item:scale-125 transition-transform" />
                       <span className="group-hover/item:text-foreground transition-colors">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="group/btn hover:scale-105 hover:translate-x-1 transition-all duration-300 border-primary/30 hover:border-primary/60"
-                >
-                  <a href="/contact" className="flex items-center gap-2">
-                    Connect <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                  </a>
-                </Button>
+                <div className="mt-auto">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="group/btn hover:scale-105 hover:translate-x-1 transition-all duration-300 border-primary/30 hover:border-primary/60"
+                  >
+                    <a href="/contact" className="flex items-center gap-2">
+                      Connect <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
               </div>
 
               {/* Glow effect on hover */}

@@ -3,7 +3,7 @@ import { MessageCircle, X, Send, Bot, User, RotateCcw, Languages, Check, Calenda
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { getBotResponse, Language, staticResponses, companyInfo } from "@/data/chatbotData";
+import { getBotResponse, Language, staticResponses, companyInfo, ChatMemory, initialMemory } from "@/data/chatbotData";
 
 interface Message {
     id: string;
@@ -17,6 +17,15 @@ type BookingStep = 'none' | 'name' | 'phone' | 'email' | 'url' | 'completed';
 export const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [language, setLanguage] = useState<Language>('en');
+
+    // Sync language with URL if present on load
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+        if (langParam === 'ta') {
+            setLanguage('ta');
+        }
+    }, []);
 
     // Booking Form State
     const [bookingStep, setBookingStep] = useState<BookingStep>('none');
@@ -68,6 +77,18 @@ export const Chatbot = () => {
         setBookingData({ name: '', phone: '', email: '', url: '' });
     };
 
+    const toggleLanguage = () => {
+        setLanguage(prev => prev === 'en' ? 'ta' : 'en');
+        // Optional: Refresh intro message if chat just started and no other messages
+        if (messages.length === 1 && !messages[0].isUser) {
+            setMessages([{
+                id: Date.now().toString(),
+                text: staticResponses.intro[language === 'en' ? 'ta' : 'en'],
+                isUser: false,
+            }]);
+        }
+    };
+
     const processBookingStep = (input: string) => {
         let nextStep: BookingStep = bookingStep;
         let responseText = "";
@@ -99,6 +120,9 @@ export const Chatbot = () => {
         return responseText;
     };
 
+    // Memory State
+    const [memory, setMemory] = useState<ChatMemory>(initialMemory);
+
     const handleSendMessage = async (overrideInput?: string) => {
         const textToSend = overrideInput || inputValue;
         if (!textToSend.trim()) return;
@@ -117,6 +141,7 @@ export const Chatbot = () => {
         setTimeout(() => {
             let botResponseText = "";
             let isBookingLink = false;
+            let updatedMemory = { ...memory };
 
             // 1. Handle Active Booking Flow
             if (bookingStep !== 'none' && bookingStep !== 'completed') {
@@ -125,11 +150,14 @@ export const Chatbot = () => {
                     isBookingLink = true;
                 }
             }
-            // 2. Standard Logic
+            // 2. Standard Logic with Memory
             else {
-                const response = getBotResponse(textToSend, language);
-                botResponseText = response;
+                const response = getBotResponse(textToSend, language, memory);
+                botResponseText = response.text;
+                updatedMemory = response.newMemory;
             }
+
+            setMemory(updatedMemory);
 
             const botMessage: Message = {
                 id: (Date.now() + 1).toString(),
@@ -188,6 +216,15 @@ export const Chatbot = () => {
                             </div>
                         </div>
                         <div className="flex items-center gap-1">
+                            <Button
+                                variant="ghost"
+                                onClick={toggleLanguage}
+                                title={language === 'en' ? "தமிழ் மாற்றவும்" : "Switch to English"}
+                                className="h-8 px-2 hover:bg-primary/10 rounded-full text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+                            >
+                                <Languages className="w-4 h-4" />
+                                <span className="text-[10px] font-bold uppercase">{language}</span>
+                            </Button>
                             <Button variant="ghost" size="icon" onClick={handleRefresh} title="Restart Chat" className="h-8 w-8 hover:bg-primary/10 rounded-full text-muted-foreground hover:text-primary transition-colors">
                                 <RotateCcw className="w-4 h-4" />
                             </Button>

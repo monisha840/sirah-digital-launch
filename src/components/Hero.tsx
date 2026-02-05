@@ -148,7 +148,7 @@ export const Hero = () => {
                                             type: "spring",
                                             stiffness: 120
                                         }}
-                                        className="flex items-center gap-3 p-4 rounded-xl glass-premium hover-lift group cursor-pointer"
+                                        className="flex items-center justify-center lg:justify-start gap-3 p-4 rounded-xl glass-premium hover-lift group cursor-pointer"
                                     >
                                         <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center shrink-0 group-hover:from-primary/30 group-hover:to-accent/20 transition-all duration-300 group-hover:scale-110 glow-soft">
                                             <benefit.icon className="w-5 h-5 text-primary" />

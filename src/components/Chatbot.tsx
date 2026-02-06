@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Bot, User, RotateCcw, Languages, Check, Calendar } from "lucide-react";
+import newRobotVisual from "@/assets/robot-image.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -205,13 +206,20 @@ export const Chatbot = () => {
                         <div className="flex items-center gap-3">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-primary/40 blur rounded-full animate-pulse-glow"></div>
-                                <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center border border-white/10">
-                                    <Bot className="w-6 h-6 text-white" />
+                                <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center border border-white/10 overflow-hidden">
+                                    <img
+                                        src={newRobotVisual}
+                                        alt="Bot"
+                                        className="w-full h-full object-cover scale-150 mt-1"
+                                        style={{
+                                            filter: "sepia(100%) hue-rotate(190deg) saturate(300%) brightness(0.9)"
+                                        }}
+                                    />
                                 </div>
                                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-background"></div>
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-display font-bold text-foreground">Sirah SmartChat</span>
+                                <span className="font-display font-bold text-foreground">Sirah AI</span>
                                 <span className="text-xs text-muted-foreground">Always active</span>
                             </div>
                         </div>
@@ -240,8 +248,15 @@ export const Chatbot = () => {
                             <div key={message.id}>
                                 <div className={cn("flex w-full items-end gap-2", message.isUser ? "justify-end" : "justify-start")}>
                                     {!message.isUser && (
-                                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20">
-                                            <Bot className="w-3 h-3 text-primary" />
+                                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20 overflow-hidden">
+                                            <img
+                                                src={newRobotVisual}
+                                                alt="Bot"
+                                                className="w-full h-full object-cover scale-150 mt-1"
+                                                style={{
+                                                    filter: "sepia(100%) hue-rotate(190deg) saturate(300%) brightness(0.9)"
+                                                }}
+                                            />
                                         </div>
                                     )}
                                     <div className={cn(
@@ -279,8 +294,15 @@ export const Chatbot = () => {
                         ))}
                         {isTyping && (
                             <div className="flex w-full items-end gap-2 justify-start">
-                                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20">
-                                    <Bot className="w-3 h-3 text-primary" />
+                                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20 overflow-hidden">
+                                    <img
+                                        src={newRobotVisual}
+                                        alt="Bot"
+                                        className="w-full h-full object-cover scale-150 mt-1"
+                                        style={{
+                                            filter: "sepia(100%) hue-rotate(190deg) saturate(300%) brightness(0.9)"
+                                        }}
+                                    />
                                 </div>
                                 <div className="bg-secondary p-3 rounded-2xl rounded-bl-none border border-white/5">
                                     <div className="flex gap-1">
@@ -360,7 +382,7 @@ export const Chatbot = () => {
                 {!isOpen && (
                     <div
                         onClick={() => setIsOpen(true)}
-                        className="hidden sm:block cursor-pointer animate-bounce-in"
+                        className="hidden sm:block cursor-pointer animate-bounce-in mb-8 mr-[-15px] z-30"
                     >
                         <div className="bg-card border border-primary/30 text-foreground px-4 py-2 rounded-full shadow-lg relative glow-soft hover:scale-105 transition-transform">
                             <span className="font-display font-semibold text-sm gradient-text">Ask Sirah AI</span>
@@ -379,22 +401,36 @@ export const Chatbot = () => {
                         </>
                     )}
 
-                    <Button
-                        onClick={() => setIsOpen(!isOpen)}
-                        size="lg"
-                        className={cn(
-                            "h-14 w-14 rounded-full shadow-[0_0_30px_-5px_hsl(var(--primary)/0.5)] transition-all duration-500 ease-out p-0 border border-primary/50 backdrop-blur-md relative z-10",
-                            isOpen
-                                ? "bg-secondary text-white rotate-90"
-                                : "bg-black/40 hover:bg-primary/20 text-primary hover:text-white hover:scale-110 hover:-translate-y-1 hover:border-primary"
-                        )}
-                    >
-                        {isOpen ? (
+                    {isOpen ? (
+                        <Button
+                            onClick={() => setIsOpen(false)}
+                            size="lg"
+                            className="h-14 w-14 rounded-full shadow-[0_0_30px_-5px_hsl(var(--primary)/0.5)] transition-all duration-500 ease-out p-0 border border-primary/50 backdrop-blur-md bg-secondary text-white rotate-90 hover:bg-secondary/90 z-20 relative"
+                        >
                             <X className="w-6 h-6" />
-                        ) : (
-                            <MessageCircle className="w-6 h-6" />
-                        )}
-                    </Button>
+                        </Button>
+                    ) : (
+                        <div
+                            onClick={() => setIsOpen(true)}
+                            className="cursor-pointer hover:scale-105 transition-transform duration-300 relative z-20 group -mb-4 mr-[-10px]"
+                        >
+                            {/* Glow effect */}
+                            <div className="absolute inset-x-4 bottom-4 top-8 bg-blue-500/20 blur-3xl rounded-full opacity-60 group-hover:opacity-80 transition-opacity duration-500 animate-pulse-glow"></div>
+
+                            {/* Robot Image - Transparent PNG */}
+                            <div className="relative w-24 sm:w-28 h-24 sm:h-28 flex items-center justify-center">
+                                <img
+                                    src={newRobotVisual}
+                                    alt="Ask Sirah AI"
+                                    className="w-full h-full object-contain animate-float"
+                                    style={{
+                                        // Sepia to Yellow -> +180deg = Blue/Violet. 
+                                        filter: "sepia(100%) hue-rotate(190deg) saturate(300%) brightness(0.9) drop-shadow(0 0 15px hsl(220 100% 50% / 0.6))"
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

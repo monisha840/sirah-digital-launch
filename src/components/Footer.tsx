@@ -27,7 +27,7 @@ const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/share/1C8e4h74gr/", label: "Facebook" },
   { icon: MessageCircle, href: "https://wa.link/zebr1n", label: "WhatsApp" },
   { icon: Instagram, href: "https://www.instagram.com/sirah_digital?igsh=MWdqMHNscWNsdTFucg==", label: "Instagram" },
-  { icon: Youtube, href: "https://www.youtube.com/@riyazlive", label: "YouTube" },
+  { icon: Youtube, href: "https://www.youtube.com/@sirahdigital", label: "YouTube" },
 ];
 
 export const Footer = () => {

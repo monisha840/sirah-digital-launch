@@ -280,7 +280,16 @@ export type IntentId =
     | 'tech_stack'
     | 'vision_mission'
     | 'founder'
-    | 'solutions';
+    | 'solutions'
+    | 'social_media'
+    | 'name_correction';
+
+export const socialLinks = {
+    facebook: "https://www.facebook.com/share/1C8e4h74gr/",
+    whatsapp: "https://wa.link/zebr1n",
+    instagram: "https://www.instagram.com/sirah_digital?igsh=MWdqMHNscWNsdTFucg==",
+    youtube: "https://www.youtube.com/@sirahdigital"
+};
 
 export interface ChatMemory {
     userName?: string;
@@ -309,6 +318,18 @@ const intents: Intent[] = [
         responses: {
             en: (input, memory) => `The pleasure is mine, **${memory.userName}**! How can I assist you with your business goals today?`,
             ta: (input, memory) => `உங்களை சந்தித்ததில் மகிழ்ச்சி, **${memory.userName}**! இன்று நான் உங்களுக்கு எவ்வாறு உதவ முடியும்?`
+        }
+    },
+    {
+        id: 'name_correction',
+        keywords: ['not my name', 'wrong name', 'incorrect name'],
+        regex: /\b(not my name|is not my name|wrong name)\b/i,
+        responses: {
+            en: (input, memory) => {
+                // Clear the wrong name if needed, or just ask content
+                return `I apologize for the confusion! **What should I call you?**`;
+            },
+            ta: (input, memory) => `குழப்பத்திற்கு மன்னிக்கவும்! **நான் உங்களை எப்படி அழைக்க வேண்டும்?**`
         }
     },
     {
@@ -477,7 +498,7 @@ const intents: Intent[] = [
     },
     {
         id: 'industries',
-        keywords: ['industry', 'sector', 'field', 'niche', 'domain', 'market', 'who for', 'target', 'business type', 'துறைகள்', 'practice'],
+        keywords: ['industry', 'industries', 'sector', 'field', 'niche', 'domain', 'market', 'who for', 'target', 'business type', 'துறைகள்', 'practice'],
         responses: {
             en: (input) => {
                 const lowerInput = input.toLowerCase();
@@ -503,12 +524,37 @@ const intents: Intent[] = [
         }
     },
     {
+        id: 'social_media',
+        keywords: ['youtube', 'instagram', 'whatsapp', 'facebook', 'social', 'link', 'connect', 'insta', 'fb', 'yt', 'channel', 'page', 'சமூகம்'],
+        regex: /\b(youtube|instagram|whatsapp|facebook|social media|links?)\b/i,
+        responses: {
+            en: (input) => {
+                const lowerInput = input.toLowerCase();
+                if (lowerInput.includes('youtube') || lowerInput.includes('yt')) return `Here is our **YouTube** channel link:\n${socialLinks.youtube}`;
+                if (lowerInput.includes('instagram') || lowerInput.includes('insta')) return `Follow us on **Instagram**:\n${socialLinks.instagram}`;
+                if (lowerInput.includes('whatsapp')) return `Connect with us on **WhatsApp**:\n${socialLinks.whatsapp}`;
+                if (lowerInput.includes('facebook') || lowerInput.includes('fb')) return `Check out our **Facebook** page:\n${socialLinks.facebook}`;
+
+                return `Stay connected with us on social media:\n\n- [YouTube](${socialLinks.youtube})\n- [Instagram](${socialLinks.instagram})\n- [WhatsApp](${socialLinks.whatsapp})\n- [Facebook](${socialLinks.facebook})`;
+            },
+            ta: (input) => {
+                const lowerInput = input.toLowerCase();
+                if (lowerInput.includes('youtube') || lowerInput.includes('yt')) return `எங்கள் **YouTube** சேனல் இணைப்பு:\n${socialLinks.youtube}`;
+                if (lowerInput.includes('instagram') || lowerInput.includes('insta')) return `எங்கள் **Instagram** பக்கம்:\n${socialLinks.instagram}`;
+                if (lowerInput.includes('whatsapp')) return `எங்களுடன் **WhatsApp**-ல் இணைய:\n${socialLinks.whatsapp}`;
+                if (lowerInput.includes('facebook') || lowerInput.includes('fb')) return `எங்கள் **Facebook** பக்கம்:\n${socialLinks.facebook}`;
+
+                return `எங்களுடன் சமூக ஊடகங்களில் இணையுங்கள்:\n\n- [YouTube](${socialLinks.youtube})\n- [Instagram](${socialLinks.instagram})\n- [WhatsApp](${socialLinks.whatsapp})\n- [Facebook](${socialLinks.facebook})`;
+            }
+        }
+    },
+    {
         id: 'team',
         keywords: [
             'team', 'ceo', 'staff', 'employee', 'expert', 'engineer', 'developer', 'who runs', 'brains', 'consultants', 'people', 'members', 'founder', 'குழு',
             'riyaz', 'jesheeba', 'monisha', 'eshwanth', 'samad', 'aakash'
         ],
-        regex: /\b(team|founder|riyaz|founder of sirah|who started)\b/i,
+        regex: /\b(team|founder|riyaz|founder of sirah|who started|who is)\b/i,
         responses: {
             en: (input) => {
                 const lowerInput = input.toLowerCase();
@@ -518,14 +564,24 @@ const intents: Intent[] = [
                     return staticResponses.founder.en;
                 }
 
-                const matchedMember = teamMembers.find(t =>
-                    lowerInput.includes(t.name.toLowerCase()) ||
-                    lowerInput.includes(t.name.split(' ')[0].toLowerCase()) ||
-                    lowerInput.includes(t.name.split(' ').pop()?.toLowerCase() || '')
-                );
+                const matchedMember = teamMembers.find(t => {
+                    // Split name by spaces and dots, filter out short initials
+                    const nameParts = t.name.toLowerCase().split(/[\s.]+/).filter(part => part.length > 2);
+                    return nameParts.some(part => lowerInput.includes(part)) || lowerInput.includes(t.name.toLowerCase());
+                });
 
                 if (matchedMember) {
                     return `The details about **${matchedMember.name}** are:\n*${matchedMember.designation}*\n${matchedMember.description}`;
+                }
+
+                // New Logic: Check if user asked "who is [Name]" but we didn't find them
+                const whoIsMatch = /\bwho is\s+([a-zA-Z]+)/i.exec(lowerInput);
+                if (whoIsMatch && whoIsMatch[1]) {
+                    const askedName = whoIsMatch[1];
+                    // Ignore if they asked "who is founder" (handled above) 
+                    if (askedName !== 'founder') {
+                        return `I don't have information about **${askedName}**.`;
+                    }
                 }
 
                 return `The team members at Sirah Digital are:\n${teamMembers.map(t => `- **${t.name}**: ${t.designation}`).join("\n")}`;
@@ -535,17 +591,26 @@ const intents: Intent[] = [
                 if (lowerInput.includes('founder') || lowerInput.includes('riyaz')) {
                     return staticResponses.founder.ta;
                 }
-                const matchedMember = teamMembers.find(t =>
-                    lowerInput.includes(t.name.toLowerCase()) ||
-                    lowerInput.includes(t.name.split(' ')[0].toLowerCase())
-                );
+                const matchedMember = teamMembers.find(t => {
+                    const nameParts = t.name.toLowerCase().split(/[\s.]+/).filter(part => part.length > 2);
+                    return nameParts.some(part => lowerInput.includes(part)) || lowerInput.includes(t.name.toLowerCase());
+                });
 
                 if (matchedMember) {
                     return `**${matchedMember.name}**\n*${matchedMember.designation}*\n${matchedMember.description}`;
                 }
 
+                // Tamil support for unknown name query
+                // Note: "who is" might be different in Tamil but for mixed English input:
+                const whoIsMatch = /\bwho is\s+([a-zA-Z]+)/i.exec(lowerInput);
+                if (whoIsMatch && whoIsMatch[1]) {
+                    return `**${whoIsMatch[1]}** பற்றி என்னிடம் தகவல் இல்லை.`;
+                }
+
                 return `Sirah Digital-ன் திறமையான குழு:\n${teamMembers.map(t => `- **${t.name}**: ${t.designation}`).join("\n")}`;
             }
+
+
         }
     },
     {
@@ -595,41 +660,62 @@ const intents: Intent[] = [
 ];
 
 // Helper to calculate score
+// Helper for Levenshtein Distance (Typo Tolerance)
+const levenshteinDistance = (a: string, b: string): number => {
+    const matrix = Array(b.length + 1).fill(null).map(() => Array(a.length + 1).fill(null));
+
+    for (let i = 0; i <= a.length; i += 1) matrix[0][i] = i;
+    for (let j = 0; j <= b.length; j += 1) matrix[j][0] = j;
+
+    for (let j = 1; j <= b.length; j += 1) {
+        for (let i = 1; i <= a.length; i += 1) {
+            const indicator = a[i - 1] === b[j - 1] ? 0 : 1;
+            matrix[j][i] = Math.min(
+                matrix[j][i - 1] + 1,
+                matrix[j - 1][i] + 1,
+                matrix[j - 1][i - 1] + indicator
+            );
+        }
+    }
+    return matrix[b.length][a.length];
+};
+
+// Helper to calculate score with Fuzzy Matching
 const calculateScore = (input: string, intent: Intent): number => {
     let score = 0;
     const lowerInput = input.toLowerCase();
+    const inputWords = lowerInput.split(/\s+/);
 
     // 1. Regex Exact Match (Critical Priority)
     if (intent.regex && intent.regex.test(lowerInput)) {
         score += 200;
+        return score; // Immediate return for regex match
     }
 
-    // 2. Keyword Matches
+    // 2. Keyword Matches (Exact + Fuzzy)
     intent.keywords.forEach(keyword => {
         const kw = keyword.toLowerCase();
 
-        // Check if keyword contains non-ASCII characters (like Tamil)
-        const isNonAscii = /[^\x00-\x7F]/.test(kw);
-
-        let borderRegex: RegExp;
-        if (isNonAscii) {
-            // For Tamil/non-ASCII, use a simpler boundary check as \b only works for [a-zA-Z0-9_]
-            borderRegex = new RegExp(`${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
-        } else {
-            borderRegex = new RegExp(`\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        // Exact match in string
+        if (lowerInput.includes(kw)) {
+            score += 20 + (kw.length * 2); // Boost for exact phrases
+            if (['riyaz', 'jesheeba', 'monisha', 'eshwanth', 'samad', 'aakash'].includes(kw)) score += 150;
+            return;
         }
 
-        if (borderRegex.test(lowerInput)) {
-            // Base keyword score
-            score += 10 + (kw.length * 0.5);
+        // Fuzzy match per word
+        const isFuzzyMatch = inputWords.some(word => {
+            // Disable fuzzy matching for short words (length <= 3) to prevent "who" matching "why"
+            if (kw.length <= 3) return word === kw;
 
-            // Exact word match bonus
-            score += 20;
+            if (Math.abs(word.length - kw.length) > 2) return false; // Length guard
+            const dist = levenshteinDistance(word, kw);
+            // Allow 1 typo for short words, 2 for longer
+            return dist <= (kw.length > 4 ? 2 : 1);
+        });
 
-            // Entity Bonus (Team Members)
-            if (['riyaz', 'jesheeba', 'monisha', 'eshwanth', 'samad', 'aakash'].includes(kw)) {
-                score += 150;
-            }
+        if (isFuzzyMatch) {
+            score += 15 + (kw.length); // Slightly lower than exact match
         }
     });
 
@@ -644,6 +730,9 @@ export const getBotResponse = (
     const lowerInput = input.toLowerCase();
     let bestIntent: Intent | null = null;
     let highestScore = 0;
+    let secondBestIntent: Intent | null = null;
+    let secondHighestScore = 0;
+
     let newMemory = { ...memory, interactionCount: memory.interactionCount + 1 };
 
     // 1. Entity Extraction: Name Capture (High Priority)
@@ -675,25 +764,34 @@ export const getBotResponse = (
         intents.forEach(intent => {
             let score = calculateScore(input, intent);
 
-            // --- CONTEXT LOGIC (The Fix) ---
-            // Only apply context bonus if there's SOME keyword match or it's a pronoun query
+            // Context Bonus
             if (memory.lastIntent === intent.id) {
-                if (score > 0) {
-                    score += 30; // Stronger bonus for confirmed relevance
-                } else if (isPronounQuery) {
-                    score += 50; // Use context for "it", "that", etc.
-                }
+                if (score > 10) score += 30;
+                else if (isPronounQuery) score += 50;
             }
 
             if (score > highestScore) {
+                secondHighestScore = highestScore;
+                secondBestIntent = bestIntent;
                 highestScore = score;
                 bestIntent = intent;
+            } else if (score > secondHighestScore) {
+                secondHighestScore = score;
+                secondBestIntent = intent;
             }
         });
     }
 
-    // 5. Handling Fallback
+    // 5. Handling Fallback & Smart Suggestions
     if (highestScore < 15) {
+        // Smart Suggestion Logic
+        if (highestScore > 8 && bestIntent) {
+            const suggestion = lang === 'en'
+                ? `I'm not 100% sure, but did you mean something related to **${bestIntent.keywords[0]}**?`
+                : `எனக்கு உறுதியாக தெரியவில்லை, நீங்கள் **${bestIntent.keywords[0]}** பற்றி கேட்கிறீர்களா?`;
+            return { text: suggestion, newMemory: { ...newMemory, lastIntent: bestIntent.id } }; // Set context tentatively
+        }
+
         const fallbackText = newMemory.userName
             ? `I'm not exactly sure about that, **${newMemory.userName}**. But I can help with:\n\n- **Services & Pricing**\n- **Our Team**\n- **Booking a Call**`
             : staticResponses.fallback[lang];
@@ -708,6 +806,7 @@ export const getBotResponse = (
         if (typeof response === 'function') {
             response = response(input, newMemory);
         }
+
         return { text: response, newMemory };
     }
 

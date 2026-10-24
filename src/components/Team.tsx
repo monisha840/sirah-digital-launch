@@ -5,13 +5,22 @@ import aakashKummarImg from "@/assets/aakash-kummar.jpg";
 import monishaImg from "@/assets/monisha.jpg";
 import eshwanthImg from "@/assets/eshwanth.jpg";
 import mohammadRiyazImg from "@/assets/mohammad-riyaz.jpg";
+import hajaNajmudeenImg from "@/assets/haja-najmudeen.jpg";
 
-const founder = {
-    name: "MOHAMED RIYAZ",
-    designation: "Founder – SIRAH DIGITAL",
-    description: "Visionary leader driving AI-powered digital growth and automation-focused business solutions at SIRAH DIGITAL.",
-    image: mohammadRiyazImg,
-};
+const founders = [
+    {
+        name: "MOHAMED RIYAZ",
+        designation: "Founder – SIRAH DIGITAL",
+        description: "Visionary leader driving AI-powered digital growth and automation-focused business solutions at SIRAH DIGITAL.",
+        image: mohammadRiyazImg,
+    },
+    {
+        name: "HAJA NAJMUDEEN",
+        designation: "Co-Founder – SIRAH DIGITAL",
+        description: "Strategic co-founder partnering to scale AI-driven automation and digital growth solutions for businesses.",
+        image: hajaNajmudeenImg,
+    },
+];
 
 const teamMembers = [
     {
@@ -59,35 +68,39 @@ export const Team = () => {
         <section id="team" className="relative overflow-hidden">
             <div className="flex flex-col lg:flex-row min-h-screen">
 
-                {/* LEFT SIDE - Founder Profile Card */}
+                {/* LEFT SIDE - Founders Profile Cards */}
                 <div className="lg:w-[370px] bg-gradient-to-b from-primary/30 via-accent/25 to-primary/20 flex flex-col items-center justify-center p-8 lg:p-12 relative backdrop-blur-sm">
-                    {/* Large Profile Image */}
-                    <div className="w-56 h-56 rounded-full bg-card/90 flex items-center justify-center mb-8 shadow-xl ring-4 ring-primary/30 overflow-hidden">
-                        {founder.image ? (
-                            <img
-                                src={founder.image}
-                                alt={founder.name}
-                                className="w-full h-full object-cover"
-                                style={{ filter: 'contrast(1.05) saturate(0.9)' }}
-                            />
-                        ) : (
-                            <div className="text-6xl font-bold gradient-text">
-                                {getInitials(founder.name)}
+                    {/* Founders */}
+                    <div className="space-y-10 mb-8 w-full">
+                        {founders.map((founder, index) => (
+                            <div key={index} className="flex flex-col items-center">
+                                <div className="w-40 h-40 rounded-full bg-card/90 flex items-center justify-center mb-4 shadow-xl ring-4 ring-primary/30 overflow-hidden">
+                                    {founder.image ? (
+                                        <img
+                                            src={founder.image}
+                                            alt={founder.name}
+                                            className="w-full h-full object-cover"
+                                            style={{ filter: 'contrast(1.05) saturate(0.9)' }}
+                                        />
+                                    ) : (
+                                        <div className="text-5xl font-bold gradient-text">
+                                            {getInitials(founder.name)}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <h2 className="text-foreground text-2xl font-bold mb-1 text-center font-display">
+                                    {founder.name}
+                                </h2>
+                                <p className="text-primary text-base mb-2 text-center font-semibold">
+                                    {founder.designation}
+                                </p>
+                                <p className="text-muted-foreground text-center text-xs leading-relaxed max-w-xs">
+                                    {founder.description}
+                                </p>
                             </div>
-                        )}
+                        ))}
                     </div>
-
-                    {/* Founder Info */}
-                    <h2 className="text-foreground text-3xl font-bold mb-3 text-center font-display">
-                        {founder.name}
-                    </h2>
-                    <p className="text-primary text-lg mb-6 text-center font-semibold">
-                        {founder.designation}
-                    </p>
-                    <p className="text-muted-foreground text-center text-sm leading-relaxed mb-10 max-w-xs">
-                        {founder.description}
-                    </p>
-
 
                     {/* Social Icons */}
                     <div className="flex gap-4">

@@ -66,6 +66,11 @@ export const teamMembers = [
         description: "Visionary leader driving AI-powered digital growth and automation-focused business solutions."
     },
     {
+        name: "HAJA NAJMUDEEN",
+        designation: "Co-Founder – SIRAH DIGITAL",
+        description: "Strategic co-founder partnering to scale AI-driven automation and digital growth solutions for businesses."
+    },
+    {
         name: "M. JESHEEBA FATHIMA",
         designation: "Digital Growth Specialist",
         description: "Driving strategic digital transformation and growth initiatives for businesses."
@@ -217,8 +222,8 @@ export const staticResponses = {
         ta: "எங்கள் லட்சியம் வணிகங்களின் வேலைப்பளுவை குறைத்து, அவர்களை தனித்துவமான வளர்ச்சியை நோக்கி வழிநடத்துவதாகும்."
     },
     founder: {
-        en: "**Mohamed Riyaz** is our Founder. He is a Technical Architect with **13+ years** of experience. He's worked with global brands like **P&G** and **Reckitt Benckier** and started Sirah Digital to help business owners reduce stress through practical AI.",
-        ta: "**Mohamed Riyaz** எமது நிறுவனர். இவர் 13+ வருட தொழில்நுட்ப அனுபவம் கொண்டவர். P&G போன்ற உலகளாவிய நிறுவனங்களில் பணியாற்றியவர்."
+        en: "**Mohamed Riyaz** is our Founder and **Haja Najmudeen** is our Co-Founder. Riyaz is a Technical Architect with **13+ years** of experience, having worked with global brands like **P&G** and **Reckitt Benckier**, and started Sirah Digital to help business owners reduce stress through practical AI. Haja partners with him to scale our AI-driven automation and digital growth solutions.",
+        ta: "**Mohamed Riyaz** எமது நிறுவனர், **Haja Najmudeen** எமது இணை நிறுவனர். ரியாஸ் 13+ வருட தொழில்நுட்ப அனுபவம் கொண்டவர். P&G போன்ற உலகளாவிய நிறுவனங்களில் பணியாற்றியவர்."
     },
     inPerson: {
         en: `The location details for visiting us are:\n\n**Email us:** ${companyInfo.contact.email}\n\n**Call us:** ${companyInfo.contact.phone}\n\n**Location:**\n${companyInfo.contact.address.en}`,
